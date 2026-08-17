@@ -1,11 +1,11 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Decode;
 
 /**
  * Single place for every tunable number and device name.
  * When the robot changes between seasons, start here.
  */
-public final class RobotConstants {
-    private RobotConstants() {}
+public final class RobotConstantsDecode {
+    private RobotConstantsDecode() {}
 
     // Hardware configuration names (must match the Robot Controller config)
     public static final String FRONT_LEFT_DRIVE  = "front_left_drive";

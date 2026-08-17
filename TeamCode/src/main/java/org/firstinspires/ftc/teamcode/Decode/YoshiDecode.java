@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Decode;
 
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -8,12 +8,13 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
+import org.firstinspires.ftc.teamcode.Decode.RobotConstantsDecode;
 
 /**
  * Owns every piece of hardware on the robot and exposes high-level actions
  * (drive, shooter, trigger, LED). OpModes should not call hardwareMap directly.
  */
-public class Yoshi {
+public class YoshiDecode {
 
     public DcMotor frontLeftDrive;
     public DcMotor backLeftDrive;
@@ -27,15 +28,15 @@ public class Yoshi {
 
     /** Call once at the top of every OpMode's runOpMode(). */
     public void init(HardwareMap hardwareMap) {
-        frontLeftDrive  = hardwareMap.get(DcMotor.class, RobotConstants.FRONT_LEFT_DRIVE);
-        backLeftDrive   = hardwareMap.get(DcMotor.class, RobotConstants.BACK_LEFT_DRIVE);
-        frontRightDrive = hardwareMap.get(DcMotor.class, RobotConstants.FRONT_RIGHT_DRIVE);
-        backRightDrive  = hardwareMap.get(DcMotor.class, RobotConstants.BACK_RIGHT_DRIVE);
-        shooter         = hardwareMap.get(DcMotor.class, RobotConstants.SHOOTER);
+        frontLeftDrive  = hardwareMap.get(DcMotor.class, RobotConstantsDecode.FRONT_LEFT_DRIVE);
+        backLeftDrive   = hardwareMap.get(DcMotor.class, RobotConstantsDecode.BACK_LEFT_DRIVE);
+        frontRightDrive = hardwareMap.get(DcMotor.class, RobotConstantsDecode.FRONT_RIGHT_DRIVE);
+        backRightDrive  = hardwareMap.get(DcMotor.class, RobotConstantsDecode.BACK_RIGHT_DRIVE);
+        shooter         = hardwareMap.get(DcMotor.class, RobotConstantsDecode.SHOOTER);
 
-        frontLed = hardwareMap.get(Servo.class,   RobotConstants.FRONT_LED);
-        trigger1 = hardwareMap.get(CRServo.class, RobotConstants.TRIGGER_1);
-        trigger2 = hardwareMap.get(CRServo.class, RobotConstants.TRIGGER_2);
+        frontLed = hardwareMap.get(Servo.class,   RobotConstantsDecode.FRONT_LED);
+        trigger1 = hardwareMap.get(CRServo.class, RobotConstantsDecode.TRIGGER_1);
+        trigger2 = hardwareMap.get(CRServo.class, RobotConstantsDecode.TRIGGER_2);
 
         frontLeftDrive.setDirection(DcMotor.Direction.FORWARD);
         backLeftDrive.setDirection(DcMotor.Direction.FORWARD);
@@ -47,8 +48,8 @@ public class Yoshi {
         frontRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        odometry = hardwareMap.get(GoBildaPinpointDriver.class, RobotConstants.PINPOINT);
-        odometry.setOffsets(RobotConstants.ODO_X_OFFSET_MM, RobotConstants.ODO_Y_OFFSET_MM, DistanceUnit.MM);
+        odometry = hardwareMap.get(GoBildaPinpointDriver.class, RobotConstantsDecode.PINPOINT);
+        odometry.setOffsets(RobotConstantsDecode.ODO_X_OFFSET_MM, RobotConstantsDecode.ODO_Y_OFFSET_MM, DistanceUnit.MM);
         odometry.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_SWINGARM_POD);
         odometry.setEncoderDirections(
                 GoBildaPinpointDriver.EncoderDirection.FORWARD,

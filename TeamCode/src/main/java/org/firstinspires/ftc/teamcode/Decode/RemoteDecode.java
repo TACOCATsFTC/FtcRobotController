@@ -1,8 +1,9 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Decode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
 
 /*
  1) Axial:    Driving forward and backward               Left-joystick Forward/Backward
@@ -11,13 +12,13 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 
 @TeleOp(name="Yoshi TeleOp", group="Linear OpMode")
-public class Remote extends LinearOpMode {
+public class RemoteDecode extends LinearOpMode {
 
     private final ElapsedTime runtime = new ElapsedTime();
-    private final Yoshi robot = new Yoshi();
+    private final YoshiDecode robot = new YoshiDecode();
 
-    private double maxWheelSpeed = RobotConstants.DEFAULT_MAX_WHEEL_SPEED;
-    private double shooterSpeed  = RobotConstants.DEFAULT_SHOOTER_SPEED;
+    private double maxWheelSpeed = RobotConstantsDecode.DEFAULT_MAX_WHEEL_SPEED;
+    private double shooterSpeed  = RobotConstantsDecode.DEFAULT_SHOOTER_SPEED;
 
     @Override
     public void runOpMode() {
@@ -42,29 +43,29 @@ public class Remote extends LinearOpMode {
 
     private void handleShooterControls() {
         if (gamepad1.y) {
-            shooterSpeed = Math.min(1.0, shooterSpeed + RobotConstants.SHOOTER_SPEED_STEP);
+            shooterSpeed = Math.min(1.0, shooterSpeed + RobotConstantsDecode.SHOOTER_SPEED_STEP);
             robot.setShooterPower(shooterSpeed);
-            robot.setLedPosition(RobotConstants.LED_POSITION_A);
+            robot.setLedPosition(RobotConstantsDecode.LED_POSITION_A);
         }
         if (gamepad1.a) {
-            shooterSpeed = Math.max(0.0, shooterSpeed - RobotConstants.SHOOTER_SPEED_STEP);
+            shooterSpeed = Math.max(0.0, shooterSpeed - RobotConstantsDecode.SHOOTER_SPEED_STEP);
             robot.setShooterPower(shooterSpeed);
-            robot.setLedPosition(RobotConstants.LED_POSITION_B);
+            robot.setLedPosition(RobotConstantsDecode.LED_POSITION_B);
         }
     }
 
     private void handleSpeedControls() {
         if (gamepad1.dpad_down) {
-            maxWheelSpeed = RobotConstants.SLOW_WHEEL_SPEED;
+            maxWheelSpeed = RobotConstantsDecode.SLOW_WHEEL_SPEED;
         }
         if (gamepad1.dpad_left) {
-            maxWheelSpeed = RobotConstants.MEDIUM_WHEEL_SPEED;
+            maxWheelSpeed = RobotConstantsDecode.MEDIUM_WHEEL_SPEED;
         }
         if (gamepad1.dpad_right) {
-            maxWheelSpeed = RobotConstants.FAST_WHEEL_SPEED;
+            maxWheelSpeed = RobotConstantsDecode.FAST_WHEEL_SPEED;
         }
         if (gamepad1.dpad_up) {
-            maxWheelSpeed = RobotConstants.TURBO_WHEEL_SPEED;
+            maxWheelSpeed = RobotConstantsDecode.TURBO_WHEEL_SPEED;
         }
     }
 
@@ -81,13 +82,13 @@ public class Remote extends LinearOpMode {
         double lateral = gamepad1.left_stick_x;
         double yaw     = gamepad1.right_stick_x;
 
-        if (Math.abs(axial)   < RobotConstants.JOYSTICK_DEADBAND) {
+        if (Math.abs(axial)   < RobotConstantsDecode.JOYSTICK_DEADBAND) {
             axial = 0;
         }
-        if (Math.abs(lateral) < RobotConstants.JOYSTICK_DEADBAND) {
+        if (Math.abs(lateral) < RobotConstantsDecode.JOYSTICK_DEADBAND) {
             lateral = 0;
         }
-        if (Math.abs(yaw)     < RobotConstants.JOYSTICK_DEADBAND) {
+        if (Math.abs(yaw)     < RobotConstantsDecode.JOYSTICK_DEADBAND) {
             yaw = 0;
         }
 

@@ -1,17 +1,16 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Decode;
 
 import android.util.Log;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
 
 @Autonomous(name="auto mateo", group="Robot")
-public class Auto extends LinearOpMode {
+public class AutoDecode extends LinearOpMode {
 
     private final ElapsedTime runtime = new ElapsedTime();
-    private final Yoshi robot         = new Yoshi();
+    private final YoshiDecode robot         = new YoshiDecode();
 
     private double routeStartX = 0;
     private double routeStartY = 0;
