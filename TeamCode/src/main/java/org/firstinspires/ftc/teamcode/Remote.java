@@ -17,7 +17,7 @@ public class Remote extends LinearOpMode {
     private final Yoshi robot = new Yoshi();
 
     private double maxWheelSpeed = RobotConstants.DEFAULT_MAX_WHEEL_SPEED;
-    private double shooterSpeed  = RobotConstants.DEFAULT_SHOOTER_SPEED;
+    private double intakeSpeed  = RobotConstants.DEFAULT_INTAKE_SPEED;
 
     @Override
     public void runOpMode() {
@@ -29,27 +29,24 @@ public class Remote extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
-        robot.setShooterPower(shooterSpeed);
+        robot.setIntakePower(RobotConstants.DEFAULT_INTAKE_SPEED);
 
         while (opModeIsActive()) {
-            handleShooterControls();
+            handleIntakeControls();
             handleSpeedControls();
-            handleTriggerControls();
             handleJoysticks();
             sendTelemetry();
         }
     }
 
-    private void handleShooterControls() {
+    private void handleIntakeControls() {
         if (gamepad1.y) {
-            shooterSpeed = Math.min(1.0, shooterSpeed + RobotConstants.SHOOTER_SPEED_STEP);
-            robot.setShooterPower(shooterSpeed);
-            robot.setLedPosition(RobotConstants.LED_POSITION_A);
+            intakeSpeed = Math.min(1.0, intakeSpeed + RobotConstants.INTAKE_SPEED_STEP);
+            robot.setIntakePower(intakeSpeed);
         }
         if (gamepad1.a) {
-            shooterSpeed = Math.max(0.0, shooterSpeed - RobotConstants.SHOOTER_SPEED_STEP);
-            robot.setShooterPower(shooterSpeed);
-            robot.setLedPosition(RobotConstants.LED_POSITION_B);
+            intakeSpeed = Math.max(0.0, intakeSpeed - RobotConstants.INTAKE_SPEED_STEP);
+            robot.setIntakePower(intakeSpeed);
         }
     }
 
@@ -65,14 +62,6 @@ public class Remote extends LinearOpMode {
         }
         if (gamepad1.dpad_up) {
             maxWheelSpeed = RobotConstants.TURBO_WHEEL_SPEED;
-        }
-    }
-
-    private void handleTriggerControls() {
-        if (gamepad1.right_trigger > 0) {
-            robot.fireTrigger();
-        } else {
-            robot.stopTrigger();
         }
     }
 
@@ -101,8 +90,8 @@ public class Remote extends LinearOpMode {
                 robot.frontLeftDrive.getPower(), robot.frontRightDrive.getPower());
         telemetry.addData("Back  left/Right", "%4.2f, %4.2f",
                 robot.backLeftDrive.getPower(), robot.backRightDrive.getPower());
-        telemetry.addData("Front LED", "%4.2f", robot.frontLed.getPosition());
-        telemetry.addData("Shooter speed", "%4.2f", robot.shooter.getPower());
+
+        telemetry.addData("Intake speed", "%4.2f", robot.intake.getPower());
         telemetry.update();
     }
 }
