@@ -22,8 +22,10 @@ public final class RobotConstants {
     public static final double TURBO_WHEEL_SPEED  = 1.0;
     public static final double JOYSTICK_DEADBAND  = 0.05;
 
+    // bugbug: these aren't shooter variables
     // Shooter
-    public static final double DEFAULT_INTAKE_SPEED = 55;
+    // bugbug: is this correct? Shouldn't it be a percentage?
+    public static final double DEFAULT_INTAKE_SPEED = 55; 
     public static final double INTAKE_SPEED_STEP   = 0.001;
 
 

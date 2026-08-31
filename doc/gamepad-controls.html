@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yoshi TeleOp Controls</title>
+  <style>
+    :root {
+      --ink: #17232b;
+      --muted: #65737c;
+      --paper: #f5f1e7;
+      --paper-deep: #e7e0d1;
+      --line: #b9b1a3;
+      --red: #d74335;
+      --blue: #2679b9;
+      --green: #348153;
+      --yellow: #e8b52e;
+      --orange: #dc6f33;
+      --controller: #27343c;
+      --controller-edge: #10191e;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(rgba(23, 35, 43, 0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(23, 35, 43, 0.055) 1px, transparent 1px),
+        var(--paper);
+      background-size: 24px 24px;
+      font-family: "Bahnschrift", "Trebuchet MS", sans-serif;
+    }
+
+    header {
+      border-bottom: 4px solid var(--ink);
+      background: rgba(245, 241, 231, 0.94);
+    }
+
+    .header-inner,
+    main,
+    footer {
+      width: min(1180px, calc(100% - 28px));
+      margin: 0 auto;
+    }
+
+    .header-inner {
+      min-height: 118px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 18px 0 14px;
+    }
+
+    .eyebrow {
+      margin: 0 0 2px;
+      color: var(--red);
+      font: 700 0.78rem/1 "Consolas", monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: "Rockwell", "Roboto Slab", Georgia, serif;
+      font-size: clamp(2rem, 4.5vw, 4.2rem);
+      line-height: 0.95;
+      letter-spacing: 0;
+    }
+
+    .mode-badge {
+      flex: 0 0 auto;
+      padding: 8px 10px;
+      color: var(--paper);
+      background: var(--ink);
+      border: 2px solid var(--ink);
+      border-radius: 4px;
+      font: 700 0.82rem/1 "Consolas", monospace;
+      text-transform: uppercase;
+    }
+
+    main { padding: 18px 0 24px; }
+
+    .controllers {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .controller-panel {
+      overflow: hidden;
+      border: 2px solid var(--ink);
+      border-radius: 6px;
+      background: rgba(250, 248, 241, 0.96);
+      box-shadow: 6px 6px 0 rgba(23, 35, 43, 0.16);
+    }
+
+    .panel-heading {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 12px 8px;
+      color: var(--paper);
+      background: var(--ink);
+    }
+
+    h2 {
+      margin: 0;
+      font-family: "Rockwell", "Roboto Slab", Georgia, serif;
+      font-size: 1.4rem;
+      letter-spacing: 0;
+    }
+
+    .role {
+      color: #d8e2e7;
+      font: 0.75rem/1 "Consolas", monospace;
+      text-transform: uppercase;
+    }
+
+    .gamepad-wrap {
+      padding: 12px 12px 4px;
+      background: radial-gradient(circle at 50% 42%, #ffffff 0 32%, transparent 65%);
+    }
+
+    svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 285px;
+    }
+
+    .shell { fill: var(--controller); stroke: var(--controller-edge); stroke-width: 5; }
+    .shell-detail { fill: none; stroke: #52616a; stroke-width: 3; }
+    .stick-base { fill: #10191e; stroke: #64737c; stroke-width: 3; }
+    .stick-top { fill: #34444d; stroke: #0c1216; stroke-width: 3; }
+    .control { stroke: #081014; stroke-width: 3; }
+    .unused { opacity: 0.3; }
+    .label-line { fill: none; stroke: var(--ink); stroke-width: 2; }
+    .label-box { fill: var(--paper); stroke: var(--ink); stroke-width: 2; rx: 4; }
+    .label-title { fill: var(--ink); font: 700 13px "Bahnschrift", sans-serif; }
+    .label-detail { fill: var(--muted); font: 11px "Consolas", monospace; }
+    .button-letter { fill: white; font: 700 13px "Bahnschrift", sans-serif; text-anchor: middle; dominant-baseline: middle; }
+    .ps-symbol { font: 700 18px "Arial", sans-serif; text-anchor: middle; dominant-baseline: middle; }
+    .touchpad { fill: #192329; stroke: #68777f; stroke-width: 3; }
+    .center-button { fill: #10191e; stroke: #68777f; stroke-width: 2; }
+
+    .mapping-list {
+      display: grid;
+      gap: 0;
+      margin: 0;
+      padding: 0 12px 10px;
+      list-style: none;
+    }
+
+    .mapping-list li {
+      display: grid;
+      grid-template-columns: minmax(112px, 0.38fr) 1fr;
+      gap: 8px;
+      align-items: baseline;
+      padding: 7px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    kbd {
+      width: fit-content;
+      padding: 2px 6px;
+      border: 1px solid var(--ink);
+      border-bottom-width: 3px;
+      border-radius: 3px;
+      background: white;
+      font: 700 0.76rem/1.2 "Consolas", monospace;
+    }
+
+    .mapping-list span {
+      font-size: 0.9rem;
+      line-height: 1.25;
+    }
+
+    .legend {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      align-items: center;
+      margin-top: 16px;
+      padding: 11px 12px;
+      border: 2px solid var(--ink);
+      border-left: 8px solid var(--orange);
+      background: #fffdf7;
+    }
+
+    .legend strong { font-family: "Rockwell", Georgia, serif; }
+    .legend p { margin: 2px 0 0; font-size: 0.86rem; color: var(--muted); }
+    .log-tag { font: 700 0.84rem "Consolas", monospace; white-space: nowrap; }
+
+    footer {
+      padding: 0 0 18px;
+      color: var(--muted);
+      font: 0.75rem "Consolas", monospace;
+      text-align: right;
+    }
+
+    @media (max-width: 820px) {
+      .controllers { grid-template-columns: 1fr; }
+      .header-inner { min-height: 92px; }
+    }
+
+    @media (max-width: 520px) {
+      .header-inner { align-items: flex-start; flex-direction: column; gap: 9px; }
+      .mode-badge { align-self: flex-start; }
+      .gamepad-wrap { padding-inline: 4px; }
+      .mapping-list li { grid-template-columns: 104px 1fr; }
+      .legend { grid-template-columns: 1fr; gap: 8px; }
+      .log-tag { white-space: normal; overflow-wrap: anywhere; }
+    }
+
+    @media print {
+      body { background: white; }
+      header { border-bottom-width: 2px; }
+      .header-inner { min-height: 80px; padding: 8px 0; }
+      main { padding: 10px 0; }
+      .controllers { gap: 10px; }
+      .controller-panel { box-shadow: none; break-inside: avoid; }
+      .gamepad-wrap { padding-top: 5px; }
+      svg { max-height: 220px; }
+      .mapping-list li { padding: 4px 0; }
+      .legend { margin-top: 10px; }
+      footer { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div>
+        <p class="eyebrow">Yoshi drive team field reference</p>
+        <h1>TeleOp Controls</h1>
+      </div>
+      <div class="mode-badge">Yoshi TeleOp</div>
+    </div>
+  </header>
+
+  <main>
+    <section class="controllers" aria-label="Controller mappings">
+      <article class="controller-panel">
+        <div class="panel-heading">
+          <h2>Gamepad 1</h2>
+          <span class="role">Driver</span>
+        </div>
+        <div class="gamepad-wrap">
+          <svg viewBox="0 0 560 300" role="img" aria-labelledby="gp1-title gp1-desc">
+            <title id="gp1-title">Gamepad 1 driving controls</title>
+            <desc id="gp1-desc">A PlayStation-style gamepad showing aligned lower drive sticks, speed D-pad, and Triangle and Cross intake buttons.</desc>
+            <path class="shell" d="M143 72 C168 49 207 47 246 57 H314 C353 47 392 49 417 72 C441 96 449 157 455 220 C459 254 426 272 402 244 L360 194 C345 176 326 166 307 166 H253 C234 166 215 176 200 194 L158 244 C134 272 101 254 105 220 C111 157 119 96 143 72 Z"/>
+            <path class="shell-detail" d="M151 76 C186 55 222 61 246 69 H314 C338 61 374 55 409 76"/>
+            <rect class="touchpad" x="235" y="70" width="90" height="55" rx="6"/>
+            <circle class="center-button" cx="280" cy="147" r="9"/>
+
+            <g aria-label="D-pad speed controls">
+              <path class="control" fill="#d5dadd" d="M158 105 h19 V86 h22 v19 h19 v22 h-19 v19 h-22 v-19 h-19 z"/>
+              <path fill="none" stroke="#65737c" stroke-width="2" d="M177 105 h22 M177 127 h22 M177 105 v22 M199 105 v22"/>
+            </g>
+
+            <circle class="stick-base" cx="231" cy="178" r="31"/><circle class="stick-top" cx="231" cy="178" r="20"/>
+            <circle class="stick-base" cx="329" cy="178" r="31"/><circle class="stick-top" cx="329" cy="178" r="20"/>
+
+            <g aria-label="PlayStation face buttons">
+              <circle class="control" fill="#18242b" cx="378" cy="92" r="16"/><text class="ps-symbol" fill="#55c6bd" x="378" y="92">△</text>
+              <circle class="control unused" fill="#18242b" cx="350" cy="120" r="16"/><text class="ps-symbol unused" fill="#d89ac9" x="350" y="120">□</text>
+              <circle class="control unused" fill="#18242b" cx="406" cy="120" r="16"/><text class="ps-symbol unused" fill="#ee7881" x="406" y="120">○</text>
+              <circle class="control" fill="#18242b" cx="378" cy="148" r="16"/><text class="ps-symbol" fill="#7da9df" x="378" y="148">×</text>
+            </g>
+
+            <path class="label-line" d="M212 198 L163 225"/><rect class="label-box" x="8" y="211" width="155" height="42"/>
+            <text class="label-title" x="18" y="228">LEFT STICK</text><text class="label-detail" x="18" y="244">drive + strafe</text>
+
+            <path class="label-line" d="M347 198 L397 227"/><rect class="label-box" x="397" y="215" width="155" height="46"/>
+            <text class="label-title" x="407" y="233">RIGHT STICK X</text><text class="label-detail" x="407" y="250">turn left / right</text>
+
+            <path class="label-line" d="M158 116 H133"/><rect class="label-box" x="8" y="73" width="125" height="66"/>
+            <text class="label-title" x="18" y="91">D-PAD</text><text class="label-detail" x="18" y="107">select max speed</text><text class="label-detail" x="18" y="123">25 / 50 / 75 / 100%</text>
+
+            <path class="label-line" d="M407 91 H431"/><rect class="label-box" x="431" y="65" width="121" height="58"/>
+            <text class="label-title" x="441" y="83">△ / ×</text><text class="label-detail" x="441" y="99">Y / A in code</text><text class="label-detail" x="441" y="114">intake + / -</text>
+          </svg>
+        </div>
+        <ul class="mapping-list">
+          <li><kbd>Left stick</kbd><span>Forward/backward and strafe</span></li>
+          <li><kbd>Right stick X</kbd><span>Turn left or right</span></li>
+          <li><kbd>D-pad down</kbd><span>Slow wheels: 25%</span></li>
+          <li><kbd>D-pad left</kbd><span>Medium wheels: 50%</span></li>
+          <li><kbd>D-pad right</kbd><span>Fast wheels: 75%</span></li>
+          <li><kbd>D-pad up</kbd><span>Turbo wheels: 100%</span></li>
+          <li><kbd>Triangle / Cross</kbd><span>Increase / decrease intake power (Y / A in code)</span></li>
+        </ul>
+      </article>
+
+      <article class="controller-panel">
+        <div class="panel-heading">
+          <h2>Gamepad 2</h2>
+          <span class="role">Diagnostics</span>
+        </div>
+        <div class="gamepad-wrap">
+          <svg viewBox="0 0 560 300" role="img" aria-labelledby="gp2-title gp2-desc">
+            <title id="gp2-title">Gamepad 2 diagnostic controls</title>
+            <desc id="gp2-desc">A PlayStation-style gamepad showing deadband adjustment on the upper-left D-pad and a drift marker on Cross.</desc>
+            <path class="shell" d="M143 72 C168 49 207 47 246 57 H314 C353 47 392 49 417 72 C441 96 449 157 455 220 C459 254 426 272 402 244 L360 194 C345 176 326 166 307 166 H253 C234 166 215 176 200 194 L158 244 C134 272 101 254 105 220 C111 157 119 96 143 72 Z"/>
+            <path class="shell-detail" d="M151 76 C186 55 222 61 246 69 H314 C338 61 374 55 409 76"/>
+            <rect class="touchpad" x="235" y="70" width="90" height="55" rx="6"/>
+            <circle class="center-button" cx="280" cy="147" r="9"/>
+
+            <g aria-label="D-pad deadband controls">
+              <path class="control" fill="#d5dadd" d="M158 105 h19 V86 h22 v19 h19 v22 h-19 v19 h-22 v-19 h-19 z"/>
+              <path fill="none" stroke="#65737c" stroke-width="2" d="M177 105 h22 M177 127 h22 M177 105 v22 M199 105 v22"/>
+              <path fill="var(--green)" d="M188 91 l-7 9 h14 z"/>
+              <path fill="var(--red)" d="M188 141 l-7 -9 h14 z"/>
+            </g>
+
+            <circle class="stick-base unused" cx="231" cy="178" r="31"/><circle class="stick-top unused" cx="231" cy="178" r="20"/>
+            <circle class="stick-base unused" cx="329" cy="178" r="31"/><circle class="stick-top unused" cx="329" cy="178" r="20"/>
+
+            <g aria-label="PlayStation face buttons">
+              <circle class="control unused" fill="#18242b" cx="378" cy="92" r="16"/><text class="ps-symbol unused" fill="#55c6bd" x="378" y="92">△</text>
+              <circle class="control unused" fill="#18242b" cx="350" cy="120" r="16"/><text class="ps-symbol unused" fill="#d89ac9" x="350" y="120">□</text>
+              <circle class="control unused" fill="#18242b" cx="406" cy="120" r="16"/><text class="ps-symbol unused" fill="#ee7881" x="406" y="120">○</text>
+              <circle class="control" fill="#18242b" cx="378" cy="148" r="16"/><text class="ps-symbol" fill="#7da9df" x="378" y="148">×</text>
+            </g>
+
+            <path class="label-line" d="M158 116 H174"/><rect class="label-box" x="8" y="67" width="166" height="66"/>
+            <text class="label-title" x="18" y="85">D-PAD UP / DOWN</text><text class="label-detail" x="18" y="101">deadband + / - 0.01</text><text class="label-detail" x="18" y="117">range 0.00 to 0.30</text>
+
+            <path class="label-line" d="M394 158 L423 219"/><rect class="label-box" x="378" y="216" width="174" height="58"/>
+            <text class="label-title" x="388" y="234">CROSS: MARK DRIFT</text><text class="label-detail" x="388" y="250">A in code</text><text class="label-detail" x="388" y="265">one marker per press</text>
+          </svg>
+        </div>
+        <ul class="mapping-list">
+          <li><kbd>D-pad up</kbd><span>Increase joystick deadband by 0.01</span></li>
+          <li><kbd>D-pad down</kbd><span>Decrease joystick deadband by 0.01</span></li>
+          <li><kbd>Cross</kbd><span>Write a <strong>DRIFT_MARKER</strong> snapshot to Logcat (A in code)</span></li>
+          <li><kbd>Other controls</kbd><span>Currently unused</span></li>
+        </ul>
+      </article>
+    </section>
+
+    <aside class="legend">
+      <div>
+        <strong>After a drift test</strong>
+        <p>Filter Logcat by the tag below. Drift markers include the raw sticks, filtered sticks, deadband, wheel powers, and timestamp.</p>
+      </div>
+      <div class="log-tag">tag:YoshiJoystick</div>
+    </aside>
+  </main>
+
+  <footer>Mappings verified against Remote.java &bull; August 30, 2026</footer>
+</body>
+</html>

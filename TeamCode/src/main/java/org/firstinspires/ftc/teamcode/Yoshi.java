@@ -10,6 +10,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 
+// bugbug: look at this and the rest of the comments. If they don't make sense to you delete them or re-write them.
 /**
  * Owns every piece of hardware on the robot and exposes high-level actions
  * (drive, shooter, trigger, LED). OpModes should not call hardwareMap directly.
@@ -27,6 +28,7 @@ public class Yoshi {
      * Call once at the top of every OpMode's runOpMode().
      */
     public void init(HardwareMap hardwareMap) {
+        // bugbug: we really shouldn't use robot constants for this.
         frontLeftDrive = hardwareMap.get(DcMotor.class, RobotConstants.FRONT_LEFT_DRIVE);
         backLeftDrive = hardwareMap.get(DcMotor.class, RobotConstants.BACK_LEFT_DRIVE);
         frontRightDrive = hardwareMap.get(DcMotor.class, RobotConstants.FRONT_RIGHT_DRIVE);

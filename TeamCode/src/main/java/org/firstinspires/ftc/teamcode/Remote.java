@@ -50,7 +50,9 @@ public class Remote extends LinearOpMode {
         }
     }
 
+    // bugbug: change this to handleWheelSpeedControls so there is no confusion.
     private void handleSpeedControls() {
+        // bugbug: this could be if-else statements to make it execute faster.
         if (gamepad1.dpad_down) {
             maxWheelSpeed = RobotConstants.SLOW_WHEEL_SPEED;
         }
@@ -66,6 +68,7 @@ public class Remote extends LinearOpMode {
     }
 
     private void handleJoysticks() {
+        // bugbug: the axial is negative here and then again in yoshi.java. They can both be flipped to positive.
         double axial   = -gamepad1.left_stick_y;  // pushing stick forward gives negative value
         double lateral = gamepad1.left_stick_x;
         double yaw     = gamepad1.right_stick_x;
@@ -86,10 +89,10 @@ public class Remote extends LinearOpMode {
     private void sendTelemetry() {
         telemetry.addData("Status", "Run Time: " + runtime);
         telemetry.addData("Wheel max power", "%4.2f", maxWheelSpeed);
-        telemetry.addData("Front left/Right", "%4.2f, %4.2f",
-                robot.frontLeftDrive.getPower(), robot.frontRightDrive.getPower());
-        telemetry.addData("Back  left/Right", "%4.2f, %4.2f",
-                robot.backLeftDrive.getPower(), robot.backRightDrive.getPower());
+        telemetry.addData("Front left/Right", "%4.2f, %4.2f", 
+        robot.frontLeftDrive.getPower(), robot.frontRightDrive.getPower());
+        telemetry.addData("Back  left/Right", "%4.2f, %4.2f", 
+        robot.backLeftDrive.getPower(), robot.backRightDrive.getPower());
 
         telemetry.addData("Intake speed", "%4.2f", robot.intake.getPower());
         telemetry.update();

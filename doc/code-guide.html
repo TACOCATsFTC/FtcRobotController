@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yoshi TeleOp Code Guide</title>
+  <style>
+    :root {
+      --ink: #17232b;
+      --muted: #66747c;
+      --paper: #f5f1e7;
+      --paper-light: #fffdf7;
+      --line: #b8b0a2;
+      --red: #ca4337;
+      --blue: #2779a8;
+      --green: #337b55;
+      --yellow: #e1ae2b;
+      --orange: #d96b31;
+      --code: #142027;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(rgba(23, 35, 43, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(23, 35, 43, 0.05) 1px, transparent 1px),
+        var(--paper);
+      background-size: 24px 24px;
+      font-family: "Bahnschrift", "Trebuchet MS", sans-serif;
+    }
+
+    a { color: inherit; }
+    code, pre, .mono { font-family: "Cascadia Code", "Consolas", monospace; }
+
+    .wrap {
+      width: min(1160px, calc(100% - 28px));
+      margin: 0 auto;
+    }
+
+    header {
+      border-bottom: 4px solid var(--ink);
+      background: rgba(245, 241, 231, 0.96);
+    }
+
+    .masthead {
+      padding: 20px 0 16px;
+    }
+
+    .eyebrow {
+      margin: 0 0 4px;
+      color: var(--red);
+      font: 700 0.78rem/1 "Consolas", monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    h1, h2, h3 {
+      font-family: "Rockwell", "Roboto Slab", Georgia, serif;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      margin: 0;
+      white-space: nowrap;
+      font-size: clamp(1.7rem, 4.2vw, 3.8rem);
+      line-height: 0.92;
+    }
+
+    main { padding: 18px 0 28px; }
+
+    .intro {
+      margin-bottom: 20px;
+    }
+
+    .intro-copy {
+      padding: 4px 0;
+      font-family: "Rockwell", "Roboto Slab", Georgia, serif;
+      font-size: clamp(1.15rem, 2.1vw, 1.55rem);
+      line-height: 1.3;
+    }
+
+    .intro-copy ul {
+      margin: 0;
+      padding-left: 1.1em;
+    }
+
+    .intro-copy li { margin: 6px 0; }
+
+    .rule {
+      padding: 10px 12px;
+      border: 2px solid var(--ink);
+      border-left: 8px solid var(--orange);
+      background: var(--paper-light);
+      font-size: 0.9rem;
+      line-height: 1.35;
+    }
+
+    .rule strong { display: block; margin-bottom: 2px; }
+
+    .architecture {
+      width: min(1400px, calc(100vw - 32px));
+      margin-inline: calc(50% - 50vw + max(16px, calc((100vw - 1400px) / 2)));
+      margin-bottom: 22px;
+      padding: 12px;
+      border: 2px solid var(--ink);
+      border-radius: 6px;
+      background: rgba(255, 253, 247, 0.96);
+      box-shadow: 6px 6px 0 rgba(23, 35, 43, 0.15);
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(1.55rem, 1vw, 2.25rem);
+      line-height: 1;
+    }
+
+    .section-kicker {
+      color: var(--muted);
+      font: 0.76rem/1 "Consolas", monospace;
+      text-transform: uppercase;
+    }
+
+    .architecture svg {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .flow-shadow { fill: rgba(23, 35, 43, 0.18); }
+    .flow-box { fill: var(--paper-light); stroke: var(--ink); stroke-width: 2; rx: 10; }
+    .flow-header { fill: var(--ink); rx: 10; }
+    .flow-accent { stroke: none; }
+    .flow-title { fill: var(--ink); font: 700 14px "Rockwell", Georgia, serif; }
+    .flow-file-title { fill: var(--paper-light); font: 700 14px "Rockwell", Georgia, serif; }
+    .flow-kicker { fill: #c9d3d8; font: 700 11px "Consolas", monospace; text-transform: uppercase; letter-spacing: 0.05em; }
+    .flow-copy { fill: var(--muted); font: 14px "Consolas", monospace; }
+    .flow-arrow { fill: none; stroke: var(--ink); stroke-width: 2; stroke-linecap: round; marker-end: url(#arrow); }
+    .flow-node { cursor: grab; touch-action: none; }
+    .flow-node:hover .flow-box { stroke: var(--red); }
+    .flow-node.dragging { cursor: grabbing; }
+    .flow-node.dragging .flow-box { stroke: var(--red); stroke-width: 3; }
+    .drag-hint { margin: 8px 0 0; color: var(--muted); font: 0.78rem "Consolas", monospace; text-align: center; }
+
+    .file-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .file-card {
+      overflow: hidden;
+      border: 2px solid var(--ink);
+      border-radius: 6px;
+      background: var(--paper-light);
+    }
+
+    .file-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 9px 10px;
+      color: var(--paper-light);
+      background: var(--ink);
+    }
+
+    .file-head h3 { margin: 0; font-size: 1.18rem; }
+    .file-number { color: #ced8dd; font: 700 0.72rem "Consolas", monospace; }
+    .file-body { padding: 10px; }
+    .file-role { margin: 0 0 8px; font-weight: 700; line-height: 1.25; }
+
+    .method-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .method-list li {
+      padding: 6px 0;
+      border-top: 1px solid var(--line);
+      font-size: 0.84rem;
+      line-height: 1.3;
+    }
+
+    .method-list code {
+      display: block;
+      margin-bottom: 2px;
+      color: var(--blue);
+      font-size: 0.76rem;
+      font-weight: 700;
+    }
+
+    .band {
+      margin-inline: calc(50% - 50vw);
+      padding: 20px max(14px, calc((100vw - 1160px) / 2));
+      color: #edf2f3;
+      background: var(--code);
+    }
+
+    .band .section-heading { margin-bottom: 14px; }
+    .band .section-kicker { color: #a8b8c0; }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 8px;
+      counter-reset: step;
+    }
+
+    .step {
+      position: relative;
+      min-height: 132px;
+      padding: 34px 9px 9px;
+      border: 1px solid #52636c;
+      border-top: 5px solid var(--blue);
+      background: #1d2c34;
+      counter-increment: step;
+    }
+
+    .step.loop { border-top-color: var(--yellow); }
+    .step::before {
+      content: "0" counter(step);
+      position: absolute;
+      top: 8px;
+      left: 9px;
+      color: #8fa3ad;
+      font: 700 0.72rem "Consolas", monospace;
+    }
+
+    .step strong { display: block; margin-bottom: 5px; font-size: 0.9rem; }
+    .step p { margin: 0; color: #bfccd2; font-size: 0.78rem; line-height: 1.32; }
+
+    .constants-table {
+      width: 100%;
+      margin: 0 0 22px;
+      border-collapse: collapse;
+      border: 2px solid var(--ink);
+      background: var(--paper-light);
+      font-size: 0.84rem;
+    }
+
+    .constants-table th,
+    .constants-table td {
+      padding: 7px 9px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .constants-table th {
+      color: white;
+      background: var(--ink);
+      font: 700 0.75rem "Consolas", monospace;
+      text-transform: uppercase;
+    }
+
+    .constants-table code { color: var(--blue); font-size: 0.75rem; font-weight: 700; }
+    .value { white-space: nowrap; font-family: "Consolas", monospace; }
+
+    .notes {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .note {
+      padding: 10px 11px;
+      border: 2px solid var(--ink);
+      border-left-width: 8px;
+      background: var(--paper-light);
+    }
+
+    .note.error { border-left-color: var(--red); }
+    .note.warning { border-left-color: var(--yellow); }
+    .note.info { border-left-color: var(--blue); }
+    .note h3 { margin: 0 0 4px; font-size: 1rem; }
+    .note p { margin: 0; color: var(--muted); font-size: 0.82rem; line-height: 1.35; }
+    .note code { color: var(--ink); font-size: 0.76rem; font-weight: 700; }
+
+    footer {
+      padding: 18px 0;
+      color: var(--muted);
+      font: 0.75rem "Consolas", monospace;
+      text-align: right;
+    }
+
+    @media (max-width: 860px) {
+      .file-grid { grid-template-columns: 1fr; }
+      .timeline { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 580px) {
+      .masthead { grid-template-columns: 1fr; min-height: 120px; }
+      .intro, .notes { grid-template-columns: 1fr; }
+      .timeline { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .section-heading { align-items: flex-start; flex-direction: column; gap: 4px; }
+      .constants-table { display: block; overflow-x: auto; white-space: nowrap; }
+    }
+
+    @media print {
+      body { background: white; }
+      .masthead { min-height: 90px; padding: 8px 0; }
+      main { padding-top: 10px; }
+      .architecture { box-shadow: none; }
+      .band { color: var(--ink); background: white; border-block: 2px solid var(--ink); }
+      .band .section-kicker, .step p { color: var(--muted); }
+      .step { min-height: 100px; color: var(--ink); background: white; }
+      .file-grid, .notes { break-inside: avoid; }
+      footer { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap masthead">
+      <div>
+        <h1>How Our Code Works</h1>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="architecture" aria-labelledby="architecture-title">
+      <div class="section-heading">
+        <h2 id="architecture-title">How It Works</h2>
+      </div>
+      <svg viewBox="0 0 900 260" role="img" aria-labelledby="diagram-title diagram-desc">
+        <title id="diagram-title">TeleOp code architecture</title>
+        <desc id="diagram-desc">Remote.java is the program we start running. Gamepad 1 sends its control information up to Remote.java. Remote.java sends that information to Yoshi.java, and prints telemetry to the Driver Station. Yoshi.java commands the robot hardware. RobotConstants.java supplies shared configuration to both Remote and Yoshi.</desc>
+        <defs>
+          <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#17232b"/></marker>
+        </defs>
+
+        <!-- Gamepad 1 -->
+        <g class="flow-node" data-node="gamepad" data-x="20" data-y="20" data-w="256" data-h="72">
+          <rect class="flow-shadow" x="26" y="26" width="256" height="72" rx="10"/>
+          <rect class="flow-box" x="20" y="20" width="256" height="72"/>
+          <rect class="flow-accent" fill="var(--blue)" x="20" y="20" width="8" height="72" rx="10"/>
+          <text class="flow-title" x="42" y="42">Gamepad 1 🎮</text>
+          <text class="flow-copy" x="42" y="60">Used to control the robot</text>
+          <text class="flow-copy" x="42" y="76">Read by Remote.java</text>
+        </g>
+
+        <!-- RobotConstants.java -->
+        <g class="flow-node" data-node="constants" data-x="110" data-y="156" data-w="228" data-h="78">
+          <rect class="flow-shadow" x="116" y="162" width="228" height="78" rx="10"/>
+          <rect class="flow-box" x="110" y="156" width="228" height="78"/>
+          <rect class="flow-header" x="110" y="156" width="228" height="28"/>
+          <text class="flow-file-title" x="130" y="176">RobotConstants.java</text>
+          <text class="flow-copy" x="130" y="202">shared numbers + names</text>
+          <text class="flow-copy" x="130" y="218">used by Remote + Yoshi</text>
+        </g>
+
+        <!-- Remote.java -->
+        <g class="flow-node" data-node="remote" data-x="311" data-y="20" data-w="330" data-h="96">
+          <rect class="flow-shadow" x="317" y="26" width="330" height="96" rx="10"/>
+          <rect class="flow-box" x="311" y="20" width="330" height="96"/>
+          <rect class="flow-header" x="311" y="20" width="330" height="28"/>
+          <text class="flow-file-title" x="331" y="40">Remote.java</text>
+          <text class="flow-copy" x="331" y="66">The program we run first</text>
+          <text class="flow-copy" x="331" y="82">Reads commands from remote control</text>
+          <text class="flow-copy" x="331" y="98">Sends the info to Yoshi.java</text>
+        </g>
+
+        <!-- Driver Station -->
+        <g class="flow-node" data-node="driverStation" data-x="676" data-y="20" data-w="190" data-h="72">
+          <rect class="flow-shadow" x="682" y="26" width="190" height="72" rx="10"/>
+          <rect class="flow-box" x="676" y="20" width="190" height="72"/>
+          <rect class="flow-accent" fill="var(--green)" x="676" y="20" width="8" height="72" rx="10"/>
+          <text class="flow-title" x="698" y="42">Driver Station 🖥</text>
+          <text class="flow-copy" x="698" y="60">Shows the robot's</text>
+          <text class="flow-copy" x="698" y="76">current status</text>
+        </g>
+
+        <!-- Yoshi.java -->
+        <g class="flow-node" data-node="yoshi" data-x="381" data-y="156" data-w="254" data-h="78">
+          <rect class="flow-shadow" x="387" y="162" width="254" height="78" rx="10"/>
+          <rect class="flow-box" x="381" y="156" width="254" height="78"/>
+          <rect class="flow-header" x="381" y="156" width="254" height="28"/>
+          <text class="flow-file-title" x="401" y="176">Yoshi.java</text>
+          <text class="flow-copy" x="401" y="202">Gets commands from Remote</text>
+          <text class="flow-copy" x="401" y="218">Sends commands to robot</text>
+        </g>
+
+        <!-- Robot hardware -->
+        <g class="flow-node" data-node="hardware" data-x="676" data-y="156" data-w="190" data-h="72">
+          <rect class="flow-shadow" x="682" y="162" width="190" height="72" rx="10"/>
+          <rect class="flow-box" x="676" y="156" width="190" height="72"/>
+          <rect class="flow-accent" fill="var(--orange)" x="676" y="156" width="8" height="72" rx="10"/>
+          <text class="flow-title" x="698" y="178">Our Robot 🤖</text>
+          <text class="flow-copy" x="698" y="196">Receives commands</text>
+          <text class="flow-copy" x="698" y="212">from Yoshi.java</text>
+        </g>
+
+        <path id="arrow-controls" class="flow-arrow" d="M276 60 H311"/>
+        <path id="arrow-telemetry" class="flow-arrow" d="M641 56 H676"/>
+        <path id="arrow-calls" class="flow-arrow" d="M480 116 V156"/>
+        <path id="arrow-power" class="flow-arrow" d="M635 193 H676"/>
+        <path id="arrow-values" class="flow-arrow" d="M300 156 L335 116"/>
+      </svg>
+      <p class="drag-hint">Drag any box to rearrange the diagram.</p>
+    </section>
+
+    <section id="files" aria-labelledby="files-title">
+      <div class="section-heading">
+        <h2 id="files-title">The Files</h2>
+      </div>
+      <div class="file-grid">
+        <article class="file-card">
+          <div class="file-head"><h3>Remote.java</h3></div>
+          <div class="file-body">
+            <p class="file-role">Our primary program that runs and collects commands from the remote control and sends them to Yoshi.java.</p>
+            <ul class="method-list">
+              <li><code>runOpMode()</code>Initializes Yoshi, waits for Start, then runs a while loop with the 4 functions.</li>
+              <li><code>handleIntakeControls()</code>Reads the Triangle/Cross and sends the values to Yoshi.java.</li>
+              <li><code>handleSpeedControls()</code>Reads D-pad input and sets the maximum wheel speed.</li>
+              <li><code>handleJoysticks()</code>Reads the joysticks and sends the values to Yoshi.java.</li>
+              <li><code>sendTelemetry()</code>sends data to the driver station.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="file-card">
+          <div class="file-head"><h3>Yoshi.java</h3></div>
+          <div class="file-body">
+            <p class="file-role">Describes the hardware that we have on our robot and sends commands to the hardware.</p>
+            <ul class="method-list">
+              <li><code>init(hardwareMap)</code>Configures the hardware (this must match the configuration in the driver station)</li>
+              <li><code>drive(axial, lateral, yaw, max)</code>Receives the commands from the joysticks and calculates the power that should be used for each wheel then sets the wheel powers.</li>
+              <li><code>setWheelPowers(fl, fr, bl, br)</code>Sets the wheel power to the specified values.</li>
+              <li><code>stopDrive()</code>Sets every wheel power to zero.</li>
+              <li><code>setIntakePower(power)</code>Sets the intake motor to a requested power.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="file-card">
+          <div class="file-head"><h3>RobotConstants.java</h3></div>
+          <div class="file-body">
+            <p class="file-role">Stores numbers that we use and change a lot.</p>
+            <ul class="method-list">
+              <li><code>Hardware names</code>Must exactly match the names configured on the Driver Station.</li>
+              <li><code>Wheel presets</code>Define the options for wheel speed.</li>
+              <li><code>Joystick threshold</code>Defines how much small stick motion should be ignored.</li>
+              <li><code>Intake values</code>Define the starting power and adjustment size.</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="constants-title">
+      <div class="section-heading">
+        <h2 id="constants-title">Current Constants</h2>
+        <span class="section-kicker">RobotConstants.java</span>
+      </div>
+      <table class="constants-table">
+        <thead><tr><th>Constant</th><th>Value</th><th>Used for</th></tr></thead>
+        <tbody>
+          <tr><td><code>DEFAULT_MAX_WHEEL_SPEED</code></td><td class="value">0.75</td><td>Wheel limit when TeleOp starts</td></tr>
+          <tr><td><code>SLOW_WHEEL_SPEED</code></td><td class="value">0.25</td><td>D-pad down preset</td></tr>
+          <tr><td><code>MEDIUM_WHEEL_SPEED</code></td><td class="value">0.50</td><td>D-pad left preset</td></tr>
+          <tr><td><code>FAST_WHEEL_SPEED</code></td><td class="value">0.75</td><td>D-pad right preset</td></tr>
+          <tr><td><code>TURBO_WHEEL_SPEED</code></td><td class="value">1.00</td><td>D-pad up preset</td></tr>
+          <tr><td><code>JOYSTICK_DEADBAND</code></td><td class="value">0.05</td><td>Joystick deadband/minimum</td></tr>
+          <tr><td><code>DEFAULT_INTAKE_SPEED</code></td><td class="value">55</td><td>Value sent to intake when TeleOp starts</td></tr>
+          <tr><td><code>INTAKE_SPEED_STEP</code></td><td class="value">0.001</td><td>Amount Triangle/Cross changes intake power per loop</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer class="wrap">Describes the current Remote.java, Yoshi.java, and RobotConstants.java &bull; August 30, 2026</footer>
+  <script>
+    if (window.location.hash) {
+      window.scrollTo(0, 0);
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+  </script>
+  <script>
+    (function () {
+      const svg = document.querySelector('.architecture svg');
+      if (!svg) return;
+
+      const nodes = {};
+      svg.querySelectorAll('.flow-node').forEach((el) => {
+        const id = el.dataset.node;
+        nodes[id] = {
+          el,
+          x: parseFloat(el.dataset.x),
+          y: parseFloat(el.dataset.y),
+          w: parseFloat(el.dataset.w),
+          h: parseFloat(el.dataset.h),
+          dx: 0,
+          dy: 0,
+          moved: false,
+        };
+      });
+
+      const connections = [
+        { id: 'controls', from: 'gamepad', to: 'remote' },
+        { id: 'telemetry', from: 'remote', to: 'driverStation' },
+        { id: 'calls', from: 'remote', to: 'yoshi' },
+        { id: 'power', from: 'yoshi', to: 'hardware' },
+        { id: 'values', from: 'constants', to: 'remote' },
+      ];
+
+      function center(node) {
+        return { x: node.x + node.w / 2 + node.dx, y: node.y + node.h / 2 + node.dy };
+      }
+
+      // Point where the line from this node's center toward "toward" exits the node's box.
+      function edgePoint(node, toward) {
+        const c = center(node);
+        const dx = toward.x - c.x;
+        const dy = toward.y - c.y;
+        if (dx === 0 && dy === 0) return c;
+        const halfW = node.w / 2;
+        const halfH = node.h / 2;
+        const scale = 1 / Math.max(Math.abs(dx) / halfW, Math.abs(dy) / halfH);
+        return { x: c.x + dx * scale, y: c.y + dy * scale };
+      }
+
+      function updateConnection(conn) {
+        const from = nodes[conn.from];
+        const to = nodes[conn.to];
+        if (!from.moved && !to.moved) return; // keep the hand-tuned default routing
+
+        const p1 = edgePoint(from, center(to));
+        const p2 = edgePoint(to, center(from));
+        const path = document.getElementById('arrow-' + conn.id);
+        if (path) path.setAttribute('d', `M${p1.x.toFixed(1)} ${p1.y.toFixed(1)} L${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`);
+
+        const midX = (p1.x + p2.x) / 2;
+        const midY = (p1.y + p2.y) / 2;
+        const rect = document.getElementById('chip-' + conn.id + '-rect');
+        const text = document.getElementById('chip-' + conn.id + '-text');
+        if (rect) {
+          const w = parseFloat(rect.getAttribute('width'));
+          rect.setAttribute('x', (midX - w / 2).toFixed(1));
+          rect.setAttribute('y', (midY - 10).toFixed(1));
+        }
+        if (text) {
+          text.setAttribute('x', midX.toFixed(1));
+          text.setAttribute('y', (midY + 4).toFixed(1));
+        }
+      }
+
+      function updateAllConnections() {
+        connections.forEach(updateConnection);
+      }
+
+      function toSvgPoint(evt) {
+        const pt = svg.createSVGPoint();
+        pt.x = evt.clientX;
+        pt.y = evt.clientY;
+        return pt.matrixTransform(svg.getScreenCTM().inverse());
+      }
+
+      let dragging = null;
+      let start = null;
+
+      svg.querySelectorAll('.flow-node').forEach((el) => {
+        el.addEventListener('pointerdown', (evt) => {
+          const node = nodes[el.dataset.node];
+          dragging = node;
+          start = { pointer: toSvgPoint(evt), dx: node.dx, dy: node.dy };
+          el.classList.add('dragging');
+          el.setPointerCapture(evt.pointerId);
+        });
+
+        el.addEventListener('pointermove', (evt) => {
+          if (dragging !== nodes[el.dataset.node]) return;
+          const p = toSvgPoint(evt);
+          dragging.dx = start.dx + (p.x - start.pointer.x);
+          dragging.dy = start.dy + (p.y - start.pointer.y);
+          dragging.moved = true;
+          dragging.el.setAttribute('transform', `translate(${dragging.dx.toFixed(1)},${dragging.dy.toFixed(1)})`);
+          updateAllConnections();
+        });
+
+        const endDrag = (evt) => {
+          if (dragging !== nodes[el.dataset.node]) return;
+          el.classList.remove('dragging');
+          if (el.hasPointerCapture(evt.pointerId)) el.releasePointerCapture(evt.pointerId);
+          dragging = null;
+        };
+        el.addEventListener('pointerup', endDrag);
+        el.addEventListener('pointercancel', endDrag);
+      });
+    })();
+  </script>
+</body>
+</html>
