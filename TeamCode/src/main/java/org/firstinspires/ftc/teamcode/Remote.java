@@ -45,7 +45,7 @@ public class Remote extends LinearOpMode {
             robot.setIntakePower(intakeSpeed);
         }
         if (gamepad1.a) {
-            intakeSpeed = Math.max(0.0, intakeSpeed - RobotConstants.INTAKE_SPEED_STEP);
+            intakeSpeed = Math.max(-1.0, intakeSpeed - RobotConstants.INTAKE_SPEED_STEP);
             robot.setIntakePower(intakeSpeed);
         }
     }
@@ -66,8 +66,8 @@ public class Remote extends LinearOpMode {
     }
 
     private void handleJoysticks() {
-        double axial   = gamepad1.left_stick_y;  // pushing stick forward gives negative value
-        double lateral = gamepad1.left_stick_x;
+        double axial   = gamepad1.left_stick_y;
+        double lateral = -gamepad1.left_stick_x;
         double yaw     = gamepad1.right_stick_x;
 
         if (Math.abs(axial)   < RobotConstants.JOYSTICK_DEADBAND) {
@@ -90,6 +90,11 @@ public class Remote extends LinearOpMode {
         robot.frontLeftDrive.getPower(), robot.frontRightDrive.getPower());
         telemetry.addData("Back  left/Right", "%4.2f, %4.2f", 
         robot.backLeftDrive.getPower(), robot.backRightDrive.getPower());
+
+        telemetry.addData("Left stick X/Y", "%4.2f, %4.2f",
+        gamepad1.left_stick_x, gamepad1.left_stick_y);
+        telemetry.addData("Right stick X/Y", "%4.2f, %4.2f",
+        gamepad1.right_stick_x, gamepad1.right_stick_y);
 
         telemetry.addData("Intake speed", "%4.2f", robot.intake.getPower());
         telemetry.update();

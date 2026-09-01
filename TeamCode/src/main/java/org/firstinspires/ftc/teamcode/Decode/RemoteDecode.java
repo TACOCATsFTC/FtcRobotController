@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Decode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -12,6 +13,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 
 @TeleOp(name="Yoshi TeleOp", group="Linear OpMode")
+@Disabled
 public class RemoteDecode extends LinearOpMode {
 
     private final ElapsedTime runtime = new ElapsedTime();
