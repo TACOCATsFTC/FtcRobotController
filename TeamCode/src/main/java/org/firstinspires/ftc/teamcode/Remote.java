@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /*
- 1) Axial:    Driving forward and backward               Left-joystick Forward/Backward
+ 1) Axial:    Driving forward and backward                Left-joystick Forward/Backward
  2) Lateral:  Strafing right and left                     Left-joystick Right and Left
  3) Yaw:      Rotating Clockwise and counter clockwise    Right-joystick Right and Left
  */
@@ -33,7 +33,7 @@ public class Remote extends LinearOpMode {
 
         while (opModeIsActive()) {
             handleIntakeControls();
-            handleSpeedControls();
+            handleWheelSpeedControls();
             handleJoysticks();
             sendTelemetry();
         }
@@ -50,26 +50,23 @@ public class Remote extends LinearOpMode {
         }
     }
 
-    // bugbug: change this to handleWheelSpeedControls so there is no confusion.
-    private void handleSpeedControls() {
-        // bugbug: this could be if-else statements to make it execute faster.
+    private void handleWheelSpeedControls() {
         if (gamepad1.dpad_down) {
             maxWheelSpeed = RobotConstants.SLOW_WHEEL_SPEED;
         }
-        if (gamepad1.dpad_left) {
+        else if (gamepad1.dpad_left) {
             maxWheelSpeed = RobotConstants.MEDIUM_WHEEL_SPEED;
         }
-        if (gamepad1.dpad_right) {
+        else if (gamepad1.dpad_right) {
             maxWheelSpeed = RobotConstants.FAST_WHEEL_SPEED;
         }
-        if (gamepad1.dpad_up) {
+        else if (gamepad1.dpad_up) {
             maxWheelSpeed = RobotConstants.TURBO_WHEEL_SPEED;
         }
     }
 
     private void handleJoysticks() {
-        // bugbug: the axial is negative here and then again in yoshi.java. They can both be flipped to positive.
-        double axial   = -gamepad1.left_stick_y;  // pushing stick forward gives negative value
+        double axial   = gamepad1.left_stick_y;  // pushing stick forward gives negative value
         double lateral = gamepad1.left_stick_x;
         double yaw     = gamepad1.right_stick_x;
 

@@ -335,7 +335,7 @@
   <main class="wrap">
     <section class="architecture" aria-labelledby="architecture-title">
       <div class="section-heading">
-        <h2 id="architecture-title">How It Works</h2>
+        <h2 id="architecture-title">How the pieces work together</h2>
       </div>
       <svg viewBox="0 0 900 260" role="img" aria-labelledby="diagram-title diagram-desc">
         <title id="diagram-title">TeleOp code architecture</title>
@@ -348,10 +348,10 @@
         <g class="flow-node" data-node="gamepad" data-x="20" data-y="20" data-w="256" data-h="72">
           <rect class="flow-shadow" x="26" y="26" width="256" height="72" rx="10"/>
           <rect class="flow-box" x="20" y="20" width="256" height="72"/>
-          <rect class="flow-accent" fill="var(--blue)" x="20" y="20" width="8" height="72" rx="10"/>
-          <text class="flow-title" x="42" y="42">Gamepad 1 🎮</text>
-          <text class="flow-copy" x="42" y="60">Used to control the robot</text>
-          <text class="flow-copy" x="42" y="76">Read by Remote.java</text>
+          <rect class="flow-header" style="fill: var(--blue)" x="20" y="20" width="256" height="28"/>
+          <text class="flow-file-title" x="42" y="40">Gamepad 1 🎮</text>
+          <text class="flow-copy" x="42" y="64">Used to control the robot</text>
+          <text class="flow-copy" x="42" y="82">Read by Remote.java</text>
         </g>
 
         <!-- RobotConstants.java -->
@@ -379,10 +379,10 @@
         <g class="flow-node" data-node="driverStation" data-x="676" data-y="20" data-w="190" data-h="72">
           <rect class="flow-shadow" x="682" y="26" width="190" height="72" rx="10"/>
           <rect class="flow-box" x="676" y="20" width="190" height="72"/>
-          <rect class="flow-accent" fill="var(--green)" x="676" y="20" width="8" height="72" rx="10"/>
-          <text class="flow-title" x="698" y="42">Driver Station 🖥</text>
-          <text class="flow-copy" x="698" y="60">Shows the robot's</text>
-          <text class="flow-copy" x="698" y="76">current status</text>
+          <rect class="flow-header" style="fill: var(--green)" x="676" y="20" width="190" height="28"/>
+          <text class="flow-file-title" x="698" y="40">Driver Station 🖥</text>
+          <text class="flow-copy" x="698" y="64">Shows the robot's</text>
+          <text class="flow-copy" x="698" y="82">current status</text>
         </g>
 
         <!-- Yoshi.java -->
@@ -399,10 +399,10 @@
         <g class="flow-node" data-node="hardware" data-x="676" data-y="156" data-w="190" data-h="72">
           <rect class="flow-shadow" x="682" y="162" width="190" height="72" rx="10"/>
           <rect class="flow-box" x="676" y="156" width="190" height="72"/>
-          <rect class="flow-accent" fill="var(--orange)" x="676" y="156" width="8" height="72" rx="10"/>
-          <text class="flow-title" x="698" y="178">Our Robot 🤖</text>
-          <text class="flow-copy" x="698" y="196">Receives commands</text>
-          <text class="flow-copy" x="698" y="212">from Yoshi.java</text>
+          <rect class="flow-header" style="fill: var(--orange)" x="676" y="156" width="190" height="28"/>
+          <text class="flow-file-title" x="698" y="176">Our Robot 🤖</text>
+          <text class="flow-copy" x="698" y="200">Receives commands</text>
+          <text class="flow-copy" x="698" y="218">from Yoshi.java</text>
         </g>
 
         <path id="arrow-controls" class="flow-arrow" d="M276 60 H311"/>

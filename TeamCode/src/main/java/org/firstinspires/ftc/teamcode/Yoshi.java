@@ -10,11 +10,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 
-// bugbug: look at this and the rest of the comments. If they don't make sense to you delete them or re-write them.
-/**
- * Owns every piece of hardware on the robot and exposes high-level actions
- * (drive, shooter, trigger, LED). OpModes should not call hardwareMap directly.
- */
 public class Yoshi {
 
     public DcMotor frontLeftDrive;
@@ -23,12 +18,7 @@ public class Yoshi {
     public DcMotor backRightDrive;
     public DcMotor intake;
 
-
-    /**
-     * Call once at the top of every OpMode's runOpMode().
-     */
     public void init(HardwareMap hardwareMap) {
-        // bugbug: we really shouldn't use robot constants for this.
         frontLeftDrive = hardwareMap.get(DcMotor.class, RobotConstants.FRONT_LEFT_DRIVE);
         backLeftDrive = hardwareMap.get(DcMotor.class, RobotConstants.BACK_LEFT_DRIVE);
         frontRightDrive = hardwareMap.get(DcMotor.class, RobotConstants.FRONT_RIGHT_DRIVE);
@@ -44,19 +34,17 @@ public class Yoshi {
         backLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
     }
 
     /**
      * Mecanum drive. axial = forward/back, lateral = strafe, yaw = rotate.
      * Powers are normalized then scaled by maxWheelSpeed.
      */
-    // Formula matches the original Remote OpMode; revisit if strafing feels wrong.
     public void drive(double axial, double lateral, double yaw, double maxWheelSpeed) {
-        double fl = -axial + lateral - yaw;
-        double fr = -axial + lateral + yaw;
-        double bl = -axial - lateral - yaw;
-        double br = -axial - lateral + yaw;
+        double fl = axial + lateral - yaw;
+        double fr = axial + lateral + yaw;
+        double bl = axial - lateral - yaw;
+        double br = axial - lateral + yaw;
 
         double max = Math.max(Math.max(Math.abs(fl), Math.abs(fr)),
                 Math.max(Math.abs(bl), Math.abs(br)));
@@ -73,9 +61,6 @@ public class Yoshi {
         backRightDrive.setPower(br * maxWheelSpeed);
     }
 
-    /**
-     * Set each wheel power independently (used for autonomous primitives).
-     */
     public void setWheelPowers(double fl, double fr, double bl, double br) {
         frontLeftDrive.setPower(fl);
         frontRightDrive.setPower(fr);
@@ -87,7 +72,6 @@ public class Yoshi {
         setWheelPowers(0, 0, 0, 0);
     }
 
-    // Shooter
     public void setIntakePower(double power) {
         intake.setPower(power);
     }
