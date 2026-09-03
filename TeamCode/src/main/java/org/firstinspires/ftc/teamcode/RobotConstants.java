@@ -24,7 +24,9 @@ public final class RobotConstants {
     // Measure these from the robot center to the OTOS center.
     public static final double OTOS_OFFSET_X_IN = 0.0;
     public static final double OTOS_OFFSET_Y_IN = 0.0;
-    public static final double OTOS_OFFSET_HEADING_DEG = 0.0;
+    // Sensor is mounted rotated 180deg from the chassis front; this makes its
+    // reported +Y match the robot's true forward direction.
+    public static final double OTOS_OFFSET_HEADING_DEG = 180.0;
 
     // Replace after calibration. Valid range: 0.872 through 1.127.
     public static final double OTOS_LINEAR_SCALAR = 1.0;
@@ -34,7 +36,8 @@ public final class RobotConstants {
     public static final double HEADING_TOLERANCE_DEG = 3.0;
     public static final double POSITION_SLOWDOWN_IN = 12.0;
     public static final double HEADING_SLOWDOWN_DEG = 45.0;
-    public static final double MIN_DRIVE_POWER = 0.12;
+    // 0.12 stalled the chassis (not enough torque to overcome static friction) a couple inches short of target.
+    public static final double MIN_DRIVE_POWER = 0.20;
     public static final double MIN_TURN_POWER = 0.10;
     public static final double WAYPOINT_TIMEOUT_SECONDS = 8.0;
 }

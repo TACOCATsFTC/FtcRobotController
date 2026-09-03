@@ -2,10 +2,11 @@ package org.firstinspires.ftc.teamcode.Decode;
 
 import android.util.Log;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-
+@Disabled
 @Autonomous(name="auto mateo", group="Robot")
 public class AutoDecode extends LinearOpMode {
 
