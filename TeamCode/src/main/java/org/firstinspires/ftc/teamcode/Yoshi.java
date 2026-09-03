@@ -1,7 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 public class Yoshi {
 
@@ -10,6 +14,7 @@ public class Yoshi {
     public DcMotor frontRightDrive;
     public DcMotor backRightDrive;
     public DcMotor intake;
+    public SparkFunOTOS otos;
 
     public void init(HardwareMap hardwareMap) {
         frontLeftDrive = hardwareMap.get(DcMotor.class, RobotConstants.FRONT_LEFT_DRIVE);
@@ -27,6 +32,21 @@ public class Yoshi {
         backLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        otos = hardwareMap.get(SparkFunOTOS.class, RobotConstants.OTOS_NAME);
+        configureOtos();
+    }
+
+    private void configureOtos() {
+        otos.setLinearUnit(DistanceUnit.INCH);
+        otos.setAngularUnit(AngleUnit.DEGREES);
+        otos.setOffset(new SparkFunOTOS.Pose2D(
+                RobotConstants.OTOS_OFFSET_X_IN, RobotConstants.OTOS_OFFSET_Y_IN,
+                RobotConstants.OTOS_OFFSET_HEADING_DEG));
+        otos.setLinearScalar(RobotConstants.OTOS_LINEAR_SCALAR);
+        otos.setAngularScalar(RobotConstants.OTOS_ANGULAR_SCALAR);
+        otos.calibrateImu();
+        otos.resetTracking();
     }
 
     /**
