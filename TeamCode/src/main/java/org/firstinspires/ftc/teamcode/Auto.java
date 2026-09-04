@@ -35,9 +35,9 @@ public class Auto extends LinearOpMode {
 
 
         //edit to cahnge the path of the robot, the first two numbers are the x and y coordinates, and the third number is the heading in degrees
-        driveToPosition(0.0, 24.0, 0.0, 0.50);
-        //sleep(2500);
-        //driveToPosition(24.0, 24.0, 90.0, 0.45);
+        driveToPosition(0.0, 24.0, 0.0, 1.00);
+        sleep(2500);
+        driveToPosition(24.0, 24.0, 90.0, 1.00);
         //sleep(2500);
         //driveToPosition(24.0, 0.0, 180.0, 0.45);
         //sleep(2500);
@@ -99,7 +99,7 @@ public class Auto extends LinearOpMode {
                         distance, RobotConstants.POSITION_SLOWDOWN_IN, RobotConstants.MIN_DRIVE_POWER, maxPower);
                 // Yoshi.drive() uses negative axial for a positive OTOS forward movement.
                 axialPower = -(robotAxialError / distance) * translationPower;
-                lateralPower = robotLateralError / distance * translationPower;
+                lateralPower = -(robotLateralError / distance) * translationPower;
             }
 
             double yawPower = 0.0;
