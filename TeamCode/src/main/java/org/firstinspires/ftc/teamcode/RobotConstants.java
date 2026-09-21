@@ -8,6 +8,7 @@ public final class RobotConstants {
     public static final String FRONT_RIGHT_DRIVE = "front_right_drive";
     public static final String BACK_RIGHT_DRIVE  = "back_right_drive";
     public static final String INTAKE           = "intake";
+    public static final String SHOOTER           = "shooter";
 
     public static final double DEFAULT_MAX_WHEEL_SPEED = 0.75;
     public static final double SLOW_WHEEL_SPEED   = 0.25;
@@ -18,6 +19,10 @@ public final class RobotConstants {
 
     public static final double DEFAULT_INTAKE_SPEED = 1;
     public static final double INTAKE_SPEED_STEP   = 0.001;
+
+    public static final double DEFAULT_SHOOTER_SPEED = 1;
+    public static final double SHOOTER_SPEED_STEP   = 0.001;
+
 
     public static final String OTOS_NAME = "sensor_otos";
 

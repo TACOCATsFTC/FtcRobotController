@@ -14,6 +14,7 @@ public class Yoshi {
     public DcMotor frontRightDrive;
     public DcMotor backRightDrive;
     public DcMotor intake;
+    public DcMotor shooter;
     public SparkFunOTOS otos;
 
     public void init(HardwareMap hardwareMap) {
@@ -22,6 +23,7 @@ public class Yoshi {
         frontRightDrive = hardwareMap.get(DcMotor.class, RobotConstants.FRONT_RIGHT_DRIVE);
         backRightDrive = hardwareMap.get(DcMotor.class, RobotConstants.BACK_RIGHT_DRIVE);
         intake = hardwareMap.get(DcMotor.class, RobotConstants.INTAKE);
+        shooter = hardwareMap.get(DcMotor.class, RobotConstants.SHOOTER);
 
         frontLeftDrive.setDirection(DcMotor.Direction.FORWARD);
         backLeftDrive.setDirection(DcMotor.Direction.FORWARD);
@@ -87,6 +89,9 @@ public class Yoshi {
 
     public void setIntakePower(double power) {
         intake.setPower(power);
+    }
+    public void setShooterPower(double power) {
+        shooter.setPower(power);
     }
 }
 
