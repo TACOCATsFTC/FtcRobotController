@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -15,6 +16,7 @@ public class Yoshi {
     public DcMotor backRightDrive;
     public DcMotor intake;
     public DcMotor shooter;
+    public CRServo trigger;
     public SparkFunOTOS otos;
 
     public void init(HardwareMap hardwareMap) {
@@ -24,6 +26,7 @@ public class Yoshi {
         backRightDrive = hardwareMap.get(DcMotor.class, RobotConstants.BACK_RIGHT_DRIVE);
         intake = hardwareMap.get(DcMotor.class, RobotConstants.INTAKE);
         shooter = hardwareMap.get(DcMotor.class, RobotConstants.SHOOTER);
+        trigger = hardwareMap.get(CRServo.class, RobotConstants.TRIGGER);
 
         frontLeftDrive.setDirection(DcMotor.Direction.FORWARD);
         backLeftDrive.setDirection(DcMotor.Direction.FORWARD);
@@ -93,5 +96,8 @@ public class Yoshi {
     public void setShooterPower(double power) {
         shooter.setPower(power);
     }
-}
 
+    public void setTriggerPower(double power) {
+        trigger.setPower(power);
+    }
+}

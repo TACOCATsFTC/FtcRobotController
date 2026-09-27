@@ -85,7 +85,8 @@
 
     .controllers {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: minmax(0, 760px);
+      justify-content: center;
       gap: 16px;
     }
 
@@ -252,7 +253,7 @@
         <div class="gamepad-wrap">
           <svg viewBox="0 0 560 300" role="img" aria-labelledby="gp1-title gp1-desc">
             <title id="gp1-title">Gamepad 1 driving controls</title>
-            <desc id="gp1-desc">A PlayStation-style gamepad showing aligned lower drive sticks, speed D-pad, and Triangle and Cross intake buttons.</desc>
+            <desc id="gp1-desc">A PlayStation-style gamepad showing aligned lower drive sticks, speed D-pad, Triangle and Cross intake buttons, and the right trigger servo control.</desc>
             <path class="shell" d="M143 72 C168 49 207 47 246 57 H314 C353 47 392 49 417 72 C441 96 449 157 455 220 C459 254 426 272 402 244 L360 194 C345 176 326 166 307 166 H253 C234 166 215 176 200 194 L158 244 C134 272 101 254 105 220 C111 157 119 96 143 72 Z"/>
             <path class="shell-detail" d="M151 76 C186 55 222 61 246 69 H314 C338 61 374 55 409 76"/>
             <rect class="touchpad" x="235" y="70" width="90" height="55" rx="6"/>
@@ -294,65 +295,13 @@
           <li><kbd>D-pad right</kbd><span>Fast wheels: 75%</span></li>
           <li><kbd>D-pad up</kbd><span>Turbo wheels: 100%</span></li>
           <li><kbd>Triangle / Cross</kbd><span>Increase / decrease intake power (Y / A in code)</span></li>
-        </ul>
-      </article>
-
-      <article class="controller-panel">
-        <div class="panel-heading">
-          <h2>Gamepad 2</h2>
-          <span class="role">Diagnostics</span>
-        </div>
-        <div class="gamepad-wrap">
-          <svg viewBox="0 0 560 300" role="img" aria-labelledby="gp2-title gp2-desc">
-            <title id="gp2-title">Gamepad 2 diagnostic controls</title>
-            <desc id="gp2-desc">A PlayStation-style gamepad showing deadband adjustment on the upper-left D-pad and a drift marker on Cross.</desc>
-            <path class="shell" d="M143 72 C168 49 207 47 246 57 H314 C353 47 392 49 417 72 C441 96 449 157 455 220 C459 254 426 272 402 244 L360 194 C345 176 326 166 307 166 H253 C234 166 215 176 200 194 L158 244 C134 272 101 254 105 220 C111 157 119 96 143 72 Z"/>
-            <path class="shell-detail" d="M151 76 C186 55 222 61 246 69 H314 C338 61 374 55 409 76"/>
-            <rect class="touchpad" x="235" y="70" width="90" height="55" rx="6"/>
-            <circle class="center-button" cx="280" cy="147" r="9"/>
-
-            <g aria-label="D-pad deadband controls">
-              <path class="control" fill="#d5dadd" d="M158 105 h19 V86 h22 v19 h19 v22 h-19 v19 h-22 v-19 h-19 z"/>
-              <path fill="none" stroke="#65737c" stroke-width="2" d="M177 105 h22 M177 127 h22 M177 105 v22 M199 105 v22"/>
-              <path fill="var(--green)" d="M188 91 l-7 9 h14 z"/>
-              <path fill="var(--red)" d="M188 141 l-7 -9 h14 z"/>
-            </g>
-
-            <circle class="stick-base unused" cx="231" cy="178" r="31"/><circle class="stick-top unused" cx="231" cy="178" r="20"/>
-            <circle class="stick-base unused" cx="329" cy="178" r="31"/><circle class="stick-top unused" cx="329" cy="178" r="20"/>
-
-            <g aria-label="PlayStation face buttons">
-              <circle class="control unused" fill="#18242b" cx="378" cy="92" r="16"/><text class="ps-symbol unused" fill="#55c6bd" x="378" y="92">△</text>
-              <circle class="control unused" fill="#18242b" cx="350" cy="120" r="16"/><text class="ps-symbol unused" fill="#d89ac9" x="350" y="120">□</text>
-              <circle class="control unused" fill="#18242b" cx="406" cy="120" r="16"/><text class="ps-symbol unused" fill="#ee7881" x="406" y="120">○</text>
-              <circle class="control" fill="#18242b" cx="378" cy="148" r="16"/><text class="ps-symbol" fill="#7da9df" x="378" y="148">×</text>
-            </g>
-
-            <path class="label-line" d="M158 116 H174"/><rect class="label-box" x="8" y="67" width="166" height="66"/>
-            <text class="label-title" x="18" y="85">D-PAD UP / DOWN</text><text class="label-detail" x="18" y="101">deadband + / - 0.01</text><text class="label-detail" x="18" y="117">range 0.00 to 0.30</text>
-
-            <path class="label-line" d="M394 158 L423 219"/><rect class="label-box" x="378" y="216" width="174" height="58"/>
-            <text class="label-title" x="388" y="234">CROSS: MARK DRIFT</text><text class="label-detail" x="388" y="250">A in code</text><text class="label-detail" x="388" y="265">one marker per press</text>
-          </svg>
-        </div>
-        <ul class="mapping-list">
-          <li><kbd>D-pad up</kbd><span>Increase joystick deadband by 0.01</span></li>
-          <li><kbd>D-pad down</kbd><span>Decrease joystick deadband by 0.01</span></li>
-          <li><kbd>Cross</kbd><span>Write a <strong>DRIFT_MARKER</strong> snapshot to Logcat (A in code)</span></li>
-          <li><kbd>Other controls</kbd><span>Currently unused</span></li>
+          <li><kbd>Right trigger</kbd><span>Run the trigger servo while held</span></li>
+          <li><kbd>Shooter</kbd><span>Starts automatically at 100% power and has no active gamepad controls</span></li>
         </ul>
       </article>
     </section>
-
-    <aside class="legend">
-      <div>
-        <strong>After a drift test</strong>
-        <p>Filter Logcat by the tag below. Drift markers include the raw sticks, filtered sticks, deadband, wheel powers, and timestamp.</p>
-      </div>
-      <div class="log-tag">tag:YoshiJoystick</div>
-    </aside>
   </main>
 
-  <footer>Mappings verified against Remote.java &bull; August 30, 2026</footer>
+  <footer>Mappings verified against Remote.java &bull; September 27, 2026</footer>
 </body>
 </html>
