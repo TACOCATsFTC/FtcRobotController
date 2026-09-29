@@ -217,8 +217,19 @@
       .log-tag { white-space: normal; overflow-wrap: anywhere; }
     }
 
+    @page {
+      size: letter portrait;
+      margin: 0.35in;
+    }
+
     @media print {
-      body { background: white; }
+      body {
+        background: white;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+      .header-inner,
+      main { width: 100%; }
       header { border-bottom-width: 2px; }
       .header-inner { min-height: 80px; padding: 8px 0; }
       main { padding: 10px 0; }
@@ -253,7 +264,7 @@
         <div class="gamepad-wrap">
           <svg viewBox="0 0 560 300" role="img" aria-labelledby="gp1-title gp1-desc">
             <title id="gp1-title">Gamepad 1 driving controls</title>
-            <desc id="gp1-desc">A PlayStation-style gamepad showing aligned lower drive sticks, speed D-pad, Triangle and Cross intake buttons, and the right trigger servo control.</desc>
+            <desc id="gp1-desc">A PlayStation-style gamepad showing aligned lower drive sticks, speed D-pad, Triangle and Cross intake buttons, Square and Circle shooter buttons, and the right trigger servo control.</desc>
             <path class="shell" d="M143 72 C168 49 207 47 246 57 H314 C353 47 392 49 417 72 C441 96 449 157 455 220 C459 254 426 272 402 244 L360 194 C345 176 326 166 307 166 H253 C234 166 215 176 200 194 L158 244 C134 272 101 254 105 220 C111 157 119 96 143 72 Z"/>
             <path class="shell-detail" d="M151 76 C186 55 222 61 246 69 H314 C338 61 374 55 409 76"/>
             <rect class="touchpad" x="235" y="70" width="90" height="55" rx="6"/>
@@ -269,8 +280,8 @@
 
             <g aria-label="PlayStation face buttons">
               <circle class="control" fill="#18242b" cx="378" cy="92" r="16"/><text class="ps-symbol" fill="#55c6bd" x="378" y="92">△</text>
-              <circle class="control unused" fill="#18242b" cx="350" cy="120" r="16"/><text class="ps-symbol unused" fill="#d89ac9" x="350" y="120">□</text>
-              <circle class="control unused" fill="#18242b" cx="406" cy="120" r="16"/><text class="ps-symbol unused" fill="#ee7881" x="406" y="120">○</text>
+              <circle class="control" fill="#18242b" cx="350" cy="120" r="16"/><text class="ps-symbol" fill="#d89ac9" x="350" y="120">□</text>
+              <circle class="control" fill="#18242b" cx="406" cy="120" r="16"/><text class="ps-symbol" fill="#ee7881" x="406" y="120">○</text>
               <circle class="control" fill="#18242b" cx="378" cy="148" r="16"/><text class="ps-symbol" fill="#7da9df" x="378" y="148">×</text>
             </g>
 
@@ -285,6 +296,9 @@
 
             <path class="label-line" d="M407 91 H431"/><rect class="label-box" x="431" y="65" width="121" height="58"/>
             <text class="label-title" x="441" y="83">△ / ×</text><text class="label-detail" x="441" y="99">Y / A in code</text><text class="label-detail" x="441" y="114">intake + / -</text>
+
+            <path class="label-line" d="M415 133 L431 158"/><rect class="label-box" x="431" y="129" width="121" height="58"/>
+            <text class="label-title" x="441" y="147">□ / ○</text><text class="label-detail" x="441" y="163">X / B in code</text><text class="label-detail" x="441" y="178">shooter + / -</text>
           </svg>
         </div>
         <ul class="mapping-list">
@@ -295,8 +309,8 @@
           <li><kbd>D-pad right</kbd><span>Fast wheels: 75%</span></li>
           <li><kbd>D-pad up</kbd><span>Turbo wheels: 100%</span></li>
           <li><kbd>Triangle / Cross</kbd><span>Increase / decrease intake power (Y / A in code)</span></li>
+          <li><kbd>Square / Circle</kbd><span>Increase / decrease shooter power (X / B in code)</span></li>
           <li><kbd>Right trigger</kbd><span>Run the trigger servo while held</span></li>
-          <li><kbd>Shooter</kbd><span>Starts automatically at 100% power and has no active gamepad controls</span></li>
         </ul>
       </article>
     </section>

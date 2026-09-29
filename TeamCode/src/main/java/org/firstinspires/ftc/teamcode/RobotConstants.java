@@ -21,7 +21,7 @@ public final class RobotConstants {
     public static final double DEFAULT_INTAKE_SPEED = 1;
     public static final double INTAKE_SPEED_STEP   = 0.001;
 
-    public static final double DEFAULT_SHOOTER_SPEED = 1;
+    public static final double DEFAULT_SHOOTER_SPEED = 0.52;
     public static final double SHOOTER_SPEED_STEP   = 0.001;
 
     public static final double TRIGGER_POWER = 1.0;
