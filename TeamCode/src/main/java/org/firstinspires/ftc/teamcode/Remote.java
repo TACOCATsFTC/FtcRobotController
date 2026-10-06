@@ -68,9 +68,13 @@ public class Remote extends LinearOpMode {
     }
 
     private void handleTriggerControls() {
-        double triggerPower = gamepad1.right_trigger > 0
-                ? RobotConstants.TRIGGER_POWER
-                : 0.0;
+        double triggerPower = 0.0;
+        if (gamepad1.right_trigger > 0) {
+            triggerPower = RobotConstants.TRIGGER_POWER;
+        }
+        else if (gamepad1.left_trigger > 0) {
+            triggerPower = -RobotConstants.TRIGGER_POWER;
+        }
         robot.setTriggerPower(triggerPower);
     }
 
@@ -90,7 +94,7 @@ public class Remote extends LinearOpMode {
     }
 
     private void handleJoysticks() {
-        double axial   = gamepad1.left_stick_y;
+        double axial   = -gamepad1.left_stick_y;
         double lateral = -gamepad1.left_stick_x;
         double yaw     = gamepad1.right_stick_x;
 
