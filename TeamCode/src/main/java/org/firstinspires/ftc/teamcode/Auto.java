@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -13,6 +14,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * and positive heading counterclockwise.
  */
 @Autonomous(name = "Yoshi OTOS Auto", group = "Robot")
+@Disabled
 public class Auto extends LinearOpMode {
     private static final String TAG = "TacoCat";
 
