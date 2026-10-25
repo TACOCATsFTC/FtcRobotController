@@ -20,7 +20,7 @@ public class ShooterAuto extends LinearOpMode {
 
         waitForStart();
 
-        robot.setShooterPower(RobotConstants.DEFAULT_SHOOTER_SPEED);
+        robot.setShooterVelocity(RobotConstants.DEFAULT_SHOOTER_SPEED);
         sleep(3000);
         robot.setIntakePower(RobotConstants.DEFAULT_INTAKE_SPEED);
 
@@ -31,7 +31,7 @@ public class ShooterAuto extends LinearOpMode {
             sleep(500);
         }
 
-        robot.setShooterPower(0.0);
+        robot.setShooterVelocity(0.0);
         robot.setIntakePower(0.0);
 
         robot.driveToPosition(this, 660.4, -431.8, 0.0, 0.6);

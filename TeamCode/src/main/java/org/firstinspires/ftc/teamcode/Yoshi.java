@@ -6,6 +6,7 @@ import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -21,7 +22,7 @@ public class Yoshi {
     public DcMotor frontRightDrive;
     public DcMotor backRightDrive;
     public DcMotor intake;
-    public DcMotor shooter;
+    public DcMotorEx shooter;
     public CRServo trigger;
     public SparkFunOTOS otos;
 
@@ -31,7 +32,7 @@ public class Yoshi {
         frontRightDrive = hardwareMap.get(DcMotor.class, RobotConstants.FRONT_RIGHT_DRIVE);
         backRightDrive = hardwareMap.get(DcMotor.class, RobotConstants.BACK_RIGHT_DRIVE);
         intake = hardwareMap.get(DcMotor.class, RobotConstants.INTAKE);
-        shooter = hardwareMap.get(DcMotor.class, RobotConstants.SHOOTER);
+        shooter = hardwareMap.get(DcMotorEx.class, RobotConstants.SHOOTER);
         trigger = hardwareMap.get(CRServo.class, RobotConstants.TRIGGER);
 
         frontLeftDrive.setDirection(DcMotor.Direction.FORWARD);
@@ -60,10 +61,6 @@ public class Yoshi {
         otos.resetTracking();
     }
 
-    /**
-     * Mecanum drive. axial = forward/back, lateral = strafe, yaw = rotate.
-     * Powers are normalized then scaled by maxWheelSpeed.
-     */
     public void drive(double axial, double lateral, double yaw, double maxWheelSpeed) {
         double fl = axial + lateral - yaw;
         double fr = axial - lateral + yaw;
@@ -175,8 +172,8 @@ public class Yoshi {
     public void setIntakePower(double power) {
         intake.setPower(power);
     }
-    public void setShooterPower(double power) {
-        shooter.setPower(power);
+    public void setShooterVelocity(double velocity) {
+        shooter.setVelocity(velocity);
     }
 
     public void setTriggerPower(double power) {

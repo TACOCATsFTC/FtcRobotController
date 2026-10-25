@@ -5,317 +5,158 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Yoshi TeleOp Controls</title>
   <style>
-    :root {
-      --ink: #17232b;
-      --muted: #65737c;
-      --paper: #f5f1e7;
-      --paper-deep: #e7e0d1;
-      --line: #b9b1a3;
-      --red: #d74335;
-      --blue: #2679b9;
-      --green: #348153;
-      --yellow: #e8b52e;
-      --orange: #dc6f33;
-      --controller: #27343c;
-      --controller-edge: #10191e;
-    }
-
     * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      color: var(--ink);
-      background:
-        linear-gradient(rgba(23, 35, 43, 0.055) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(23, 35, 43, 0.055) 1px, transparent 1px),
-        var(--paper);
-      background-size: 24px 24px;
-      font-family: "Bahnschrift", "Trebuchet MS", sans-serif;
-    }
-
-    header {
-      border-bottom: 4px solid var(--ink);
-      background: rgba(245, 241, 231, 0.94);
-    }
-
-    .header-inner,
-    main,
-    footer {
-      width: min(1180px, calc(100% - 28px));
-      margin: 0 auto;
-    }
-
-    .header-inner {
-      min-height: 118px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-      padding: 18px 0 14px;
-    }
-
-    .eyebrow {
-      margin: 0 0 2px;
-      color: var(--red);
-      font: 700 0.78rem/1 "Consolas", monospace;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-    }
-
-    h1 {
-      margin: 0;
-      font-family: "Rockwell", "Roboto Slab", Georgia, serif;
-      font-size: clamp(2rem, 4.5vw, 4.2rem);
-      line-height: 0.95;
-      letter-spacing: 0;
-    }
-
-    .mode-badge {
-      flex: 0 0 auto;
-      padding: 8px 10px;
-      color: var(--paper);
-      background: var(--ink);
-      border: 2px solid var(--ink);
-      border-radius: 4px;
-      font: 700 0.82rem/1 "Consolas", monospace;
-      text-transform: uppercase;
-    }
-
-    main { padding: 18px 0 24px; }
-
-    .controllers {
-      display: grid;
-      grid-template-columns: minmax(0, 760px);
-      justify-content: center;
-      gap: 16px;
-    }
-
-    .controller-panel {
-      overflow: hidden;
-      border: 2px solid var(--ink);
-      border-radius: 6px;
-      background: rgba(250, 248, 241, 0.96);
-      box-shadow: 6px 6px 0 rgba(23, 35, 43, 0.16);
-    }
-
-    .panel-heading {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 10px 12px 8px;
-      color: var(--paper);
-      background: var(--ink);
-    }
-
-    h2 {
-      margin: 0;
-      font-family: "Rockwell", "Roboto Slab", Georgia, serif;
-      font-size: 1.4rem;
-      letter-spacing: 0;
-    }
-
-    .role {
-      color: #d8e2e7;
-      font: 0.75rem/1 "Consolas", monospace;
-      text-transform: uppercase;
-    }
-
-    .gamepad-wrap {
-      padding: 12px 12px 4px;
-      background: radial-gradient(circle at 50% 42%, #ffffff 0 32%, transparent 65%);
-    }
-
-    svg {
-      display: block;
-      width: 100%;
-      height: auto;
-      max-height: 285px;
-    }
-
-    .shell { fill: var(--controller); stroke: var(--controller-edge); stroke-width: 5; }
-    .shell-detail { fill: none; stroke: #52616a; stroke-width: 3; }
-    .stick-base { fill: #10191e; stroke: #64737c; stroke-width: 3; }
-    .stick-top { fill: #34444d; stroke: #0c1216; stroke-width: 3; }
-    .control { stroke: #081014; stroke-width: 3; }
-    .unused { opacity: 0.3; }
-    .label-line { fill: none; stroke: var(--ink); stroke-width: 2; }
-    .label-box { fill: var(--paper); stroke: var(--ink); stroke-width: 2; rx: 4; }
-    .label-title { fill: var(--ink); font: 700 13px "Bahnschrift", sans-serif; }
-    .label-detail { fill: var(--muted); font: 11px "Consolas", monospace; }
-    .button-letter { fill: white; font: 700 13px "Bahnschrift", sans-serif; text-anchor: middle; dominant-baseline: middle; }
-    .ps-symbol { font: 700 18px "Arial", sans-serif; text-anchor: middle; dominant-baseline: middle; }
-    .touchpad { fill: #192329; stroke: #68777f; stroke-width: 3; }
-    .center-button { fill: #10191e; stroke: #68777f; stroke-width: 2; }
-
-    .mapping-list {
-      display: grid;
-      gap: 0;
-      margin: 0;
-      padding: 0 12px 10px;
-      list-style: none;
-    }
-
-    .mapping-list li {
-      display: grid;
-      grid-template-columns: minmax(112px, 0.38fr) 1fr;
-      gap: 8px;
-      align-items: baseline;
-      padding: 7px 0;
-      border-top: 1px solid var(--line);
-    }
-
-    kbd {
-      width: fit-content;
-      padding: 2px 6px;
-      border: 1px solid var(--ink);
-      border-bottom-width: 3px;
-      border-radius: 3px;
-      background: white;
-      font: 700 0.76rem/1.2 "Consolas", monospace;
-    }
-
-    .mapping-list span {
-      font-size: 0.9rem;
-      line-height: 1.25;
-    }
-
-    .legend {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 20px;
-      align-items: center;
-      margin-top: 16px;
-      padding: 11px 12px;
-      border: 2px solid var(--ink);
-      border-left: 8px solid var(--orange);
-      background: #fffdf7;
-    }
-
-    .legend strong { font-family: "Rockwell", Georgia, serif; }
-    .legend p { margin: 2px 0 0; font-size: 0.86rem; color: var(--muted); }
-    .log-tag { font: 700 0.84rem "Consolas", monospace; white-space: nowrap; }
-
-    footer {
-      padding: 0 0 18px;
-      color: var(--muted);
-      font: 0.75rem "Consolas", monospace;
-      text-align: right;
-    }
-
-    @media (max-width: 820px) {
-      .controllers { grid-template-columns: 1fr; }
-      .header-inner { min-height: 92px; }
-    }
-
-    @media (max-width: 520px) {
-      .header-inner { align-items: flex-start; flex-direction: column; gap: 9px; }
-      .mode-badge { align-self: flex-start; }
-      .gamepad-wrap { padding-inline: 4px; }
-      .mapping-list li { grid-template-columns: 104px 1fr; }
-      .legend { grid-template-columns: 1fr; gap: 8px; }
-      .log-tag { white-space: normal; overflow-wrap: anywhere; }
-    }
-
-    @page {
-      size: letter portrait;
-      margin: 0.35in;
-    }
-
+    body { margin: 0; padding: 6px; background: #fff; color: #132334; font-family: Arial, sans-serif; }
+    main { width: 100%; margin: auto; padding: 8px; border: 1px solid #c7d3e5; border-radius: 16px; }
+    h1 { margin: 0 0 8px; color: #2457cf; font-size: clamp(20px, 3vw, 32px); }
+    .intro { margin: 0 0 8px; color: #465b74; font-size: 22px; line-height: 1.4; }
+    .diagram { min-width: 0; aspect-ratio: 1240 / 720; }
+    svg { display: block; width: 100%; height: 100%; }
+    .box { stroke-width: 2.5; rx: 12; }
+    .heading { font-size: 25px; font-weight: 800; }
+    .detail { font-size: 21px; }
+    .small { font-size: 18px; }
+    .connector { fill: none; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+    .connector-halo { fill: none; stroke: #fff; stroke-width: 10; stroke-linecap: round; stroke-linejoin: round; }
+    .marker circle { fill: currentColor; stroke: #fff; stroke-width: 3; r: 6; }
+    .symbol { font: 700 27px Arial, sans-serif; text-anchor: middle; dominant-baseline: middle; }
+    .hardware-label { fill: #fff; font-size: 15px; font-weight: 700; text-anchor: middle; }
+    @page { size: 1240px 776px; margin: 0; }
     @media print {
-      body {
-        background: white;
-        print-color-adjust: exact;
-        -webkit-print-color-adjust: exact;
-      }
-      .header-inner,
-      main { width: 100%; }
-      header { border-bottom-width: 2px; }
-      .header-inner { min-height: 80px; padding: 8px 0; }
-      main { padding: 10px 0; }
-      .controllers { gap: 10px; }
-      .controller-panel { box-shadow: none; break-inside: avoid; }
-      .gamepad-wrap { padding-top: 5px; }
-      svg { max-height: 220px; }
-      .mapping-list li { padding: 4px 0; }
-      .legend { margin-top: 10px; }
-      footer { display: none; }
+      body { padding: 0; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      main { width: 100%; max-width: none; padding: 0; border: 0; border-radius: 0; }
+      h1 { font-size: 32px; line-height: 48px; margin: 0 0 8px; padding: 0 12px; }
+      .intro { font-size: 16px; }
+      .diagram { overflow: visible; }
+      svg { height: auto; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="header-inner">
-      <div>
-        <p class="eyebrow">Yoshi drive team field reference</p>
-        <h1>TeleOp Controls</h1>
-      </div>
-      <div class="mode-badge">Yoshi TeleOp</div>
-    </div>
-  </header>
-
   <main>
-    <section class="controllers" aria-label="Controller mappings">
-      <article class="controller-panel">
-        <div class="panel-heading">
-          <h2>Gamepad 1</h2>
-          <span class="role">Driver</span>
-        </div>
-        <div class="gamepad-wrap">
-          <svg viewBox="0 0 560 300" role="img" aria-labelledby="gp1-title gp1-desc">
-            <title id="gp1-title">Gamepad 1 driving controls</title>
-            <desc id="gp1-desc">A PlayStation-style gamepad showing aligned lower drive sticks, speed D-pad, Triangle and Cross intake buttons, Square and Circle shooter buttons, and the right trigger servo control.</desc>
-            <path class="shell" d="M143 72 C168 49 207 47 246 57 H314 C353 47 392 49 417 72 C441 96 449 157 455 220 C459 254 426 272 402 244 L360 194 C345 176 326 166 307 166 H253 C234 166 215 176 200 194 L158 244 C134 272 101 254 105 220 C111 157 119 96 143 72 Z"/>
-            <path class="shell-detail" d="M151 76 C186 55 222 61 246 69 H314 C338 61 374 55 409 76"/>
-            <rect class="touchpad" x="235" y="70" width="90" height="55" rx="6"/>
-            <circle class="center-button" cx="280" cy="147" r="9"/>
+    <h1>Gamepad 1 Controls</h1>
+    <div class="diagram" role="region" aria-label="Driver controls diagram">
+      <svg viewBox="0 0 1240 720" role="img" aria-labelledby="map-title map-desc">
+        <title id="map-title">Yoshi Gamepad 1 controls</title>
+        <desc id="map-desc">Left stick drives forward, backward, and strafes. Right stick turns. D-pad down selects 25 percent wheel speed, left 50 percent, right 75 percent, and up 100 percent. Triangle increases intake power; Cross decreases it. Square increases shooter speed; Circle decreases it. Right trigger runs the trigger servo forward while held; left trigger reverses it. Right trigger takes priority when both are held.</desc>
+        <defs>
+          <linearGradient id="shell" x1="0" y1="0" x2="0.8" y2="1">
+            <stop stop-color="#6492ff"/><stop offset="0.45" stop-color="#3d49ac"/><stop offset="1" stop-color="#272041"/>
+          </linearGradient>
+          <linearGradient id="pad" x2="0" y2="1">
+            <stop stop-color="#6c9cff"/><stop offset="1" stop-color="#3a5fc7"/>
+          </linearGradient>
+        </defs>
 
-            <g aria-label="D-pad speed controls">
-              <path class="control" fill="#d5dadd" d="M158 105 h19 V86 h22 v19 h19 v22 h-19 v19 h-22 v-19 h-19 z"/>
-              <path fill="none" stroke="#65737c" stroke-width="2" d="M177 105 h22 M177 127 h22 M177 105 v22 M199 105 v22"/>
-            </g>
+        <g aria-label="PlayStation-style controller">
+          <rect x="435" y="205" width="74" height="44" rx="14" fill="#252639" stroke="#45465e" stroke-width="3"/>
+          <rect x="731" y="205" width="74" height="44" rx="14" fill="#252639" stroke="#45465e" stroke-width="3"/>
+          <path d="M432 244 C481 216 544 231 572 239 H668 C711 225 761 221 808 244 C838 268 855 342 864 435 L876 509 C881 556 850 584 823 558 L752 462 C730 437 704 424 671 424 H569 C536 424 510 437 488 462 L417 558 C390 584 359 556 364 509 L376 435 C385 342 402 268 432 244 Z"
+            fill="url(#shell)" stroke="#27243e" stroke-width="5"/>
+          <rect x="521" y="247" width="198" height="108" rx="24" fill="url(#pad)" stroke="#283c80" stroke-width="4"/>
+          <rect x="430" y="237" width="80" height="17" rx="7" fill="#38374e"/>
+          <rect x="730" y="237" width="80" height="17" rx="7" fill="#38374e"/>
+          <text class="hardware-label" x="470" y="232">L2</text>
+          <text class="hardware-label" x="770" y="232">R2</text>
+          <path d="M439 319 h21 v-24 h27 v24 h23 v27 h-23 v24 h-27 v-24 h-21z" fill="#25293f" stroke="#171b2b" stroke-width="3"/>
+          <text class="hardware-label" x="474" y="315">&#9650;</text>
+          <text class="hardware-label" x="474" y="363">&#9660;</text>
+          <circle cx="752" cy="291" r="19" fill="#25293f" stroke="#20223e" stroke-width="3"/>
+          <circle cx="717" cy="330" r="19" fill="#25293f" stroke="#20223e" stroke-width="3"/>
+          <circle cx="787" cy="330" r="19" fill="#25293f" stroke="#20223e" stroke-width="3"/>
+          <circle cx="752" cy="369" r="19" fill="#25293f" stroke="#20223e" stroke-width="3"/>
+          <text class="symbol" fill="#7de4cb" x="752" y="291">&#9651;</text>
+          <text class="symbol" fill="#edb2e0" x="717" y="330">&#9633;</text>
+          <text class="symbol" fill="#ffa5b0" x="787" y="330">&#9675;</text>
+          <text class="symbol" fill="#a8ceff" x="752" y="369">&#215;</text>
+          <circle cx="540" cy="405" r="42" fill="#29283e" stroke="#565776" stroke-width="5"/>
+          <circle cx="540" cy="405" r="29" fill="#45445c" stroke="#1e2035" stroke-width="3"/>
+          <circle cx="700" cy="405" r="42" fill="#29283e" stroke="#565776" stroke-width="5"/>
+          <circle cx="700" cy="405" r="29" fill="#45445c" stroke="#1e2035" stroke-width="3"/>
+          <circle cx="620" cy="400" r="12" fill="#25293f"/>
+          <rect x="605" y="427" width="30" height="6" rx="3" fill="#92b5bd"/>
+        </g>
 
-            <circle class="stick-base" cx="231" cy="178" r="31"/><circle class="stick-top" cx="231" cy="178" r="20"/>
-            <circle class="stick-base" cx="329" cy="178" r="31"/><circle class="stick-top" cx="329" cy="178" r="20"/>
+        <g aria-label="Control connection lines">
+          <defs>
+            <path id="trigger-route" d="M530 143 L470 216 M700 143 L770 216"/>
+            <path id="shooter-route" d="M890 78 H845 V245 L717 330 M890 109 H875 V310 L787 330"/>
+            <path id="wheel-route" d="M318 350 H395 L430 332"/>
+            <path id="intake-route" d="M922 330 H866 L752 291 M922 361 H853 L752 369"/>
+            <path id="driving-route" d="M540 591 V405 M700 591 V405"/>
+          </defs>
+          <g class="connector">
+            <use class="connector-halo" href="#trigger-route"/>
+            <use href="#trigger-route" stroke="#14834b"/>
+            <use class="connector-halo" href="#shooter-route"/>
+            <use href="#shooter-route" stroke="#b55b09"/>
+            <use class="connector-halo" href="#wheel-route"/>
+            <use href="#wheel-route" stroke="#7746cf"/>
+            <use class="connector-halo" href="#intake-route"/>
+            <use href="#intake-route" stroke="#14834b"/>
+            <use class="connector-halo" href="#driving-route"/>
+            <use href="#driving-route" stroke="#2457cf"/>
+          </g>
+        </g>
+        <g class="marker">
+          <g style="color: #14834b">
+            <circle cx="470" cy="216"/>
+            <circle cx="770" cy="216"/>
+          </g>
+          <g style="color: #b55b09">
+            <circle cx="717" cy="330"/>
+            <circle cx="787" cy="330"/>
+          </g>
+          <g style="color: #7746cf">
+            <circle cx="474" cy="306"/>
+            <circle cx="448" cy="332"/>
+            <circle cx="500" cy="332"/>
+            <circle cx="474" cy="358"/>
+          </g>
+          <g style="color: #14834b">
+            <circle cx="752" cy="291"/>
+            <circle cx="752" cy="369"/>
+          </g>
+          <g style="color: #2457cf">
+            <circle cx="540" cy="405"/>
+            <circle cx="700" cy="405"/>
+          </g>
+        </g>
 
-            <g aria-label="PlayStation face buttons">
-              <circle class="control" fill="#18242b" cx="378" cy="92" r="16"/><text class="ps-symbol" fill="#55c6bd" x="378" y="92">△</text>
-              <circle class="control" fill="#18242b" cx="350" cy="120" r="16"/><text class="ps-symbol" fill="#d89ac9" x="350" y="120">□</text>
-              <circle class="control" fill="#18242b" cx="406" cy="120" r="16"/><text class="ps-symbol" fill="#ee7881" x="406" y="120">○</text>
-              <circle class="control" fill="#18242b" cx="378" cy="148" r="16"/><text class="ps-symbol" fill="#7da9df" x="378" y="148">×</text>
-            </g>
-
-            <path class="label-line" d="M212 198 L163 225"/><rect class="label-box" x="8" y="211" width="155" height="42"/>
-            <text class="label-title" x="18" y="228">LEFT STICK</text><text class="label-detail" x="18" y="244">drive + strafe</text>
-
-            <path class="label-line" d="M347 198 L397 227"/><rect class="label-box" x="397" y="215" width="155" height="46"/>
-            <text class="label-title" x="407" y="233">RIGHT STICK X</text><text class="label-detail" x="407" y="250">turn left / right</text>
-
-            <path class="label-line" d="M158 116 H133"/><rect class="label-box" x="8" y="73" width="125" height="66"/>
-            <text class="label-title" x="18" y="91">D-PAD</text><text class="label-detail" x="18" y="107">select max speed</text><text class="label-detail" x="18" y="123">25 / 50 / 75 / 100%</text>
-
-            <path class="label-line" d="M407 91 H431"/><rect class="label-box" x="431" y="65" width="121" height="58"/>
-            <text class="label-title" x="441" y="83">△ / ×</text><text class="label-detail" x="441" y="99">Y / A in code</text><text class="label-detail" x="441" y="114">intake + / -</text>
-
-            <path class="label-line" d="M415 133 L431 158"/><rect class="label-box" x="431" y="129" width="121" height="58"/>
-            <text class="label-title" x="441" y="147">□ / ○</text><text class="label-detail" x="441" y="163">X / B in code</text><text class="label-detail" x="441" y="178">shooter + / -</text>
-          </svg>
-        </div>
-        <ul class="mapping-list">
-          <li><kbd>Left stick</kbd><span>Forward/backward and strafe</span></li>
-          <li><kbd>Right stick X</kbd><span>Turn left or right</span></li>
-          <li><kbd>D-pad down</kbd><span>Slow wheels: 25%</span></li>
-          <li><kbd>D-pad left</kbd><span>Medium wheels: 50%</span></li>
-          <li><kbd>D-pad right</kbd><span>Fast wheels: 75%</span></li>
-          <li><kbd>D-pad up</kbd><span>Turbo wheels: 100%</span></li>
-          <li><kbd>Triangle / Cross</kbd><span>Increase / decrease intake power (Y / A in code)</span></li>
-          <li><kbd>Square / Circle</kbd><span>Increase / decrease shooter power (X / B in code)</span></li>
-          <li><kbd>Right trigger</kbd><span>Run the trigger servo while held</span></li>
-        </ul>
-      </article>
-    </section>
+        <g aria-label="Trigger servo" transform="translate(500 0)">
+          <rect class="box" x="12" y="35" width="210" height="108" fill="#eaf6ef" stroke="#14834b"/>
+          <text class="heading" x="24" y="65">Trigger servo</text>
+          <text class="detail" x="24" y="96">Left: reverse</text>
+          <text class="detail" x="24" y="126">Right: forward</text>
+        </g>
+        <g aria-label="Shooter speed" transform="translate(445 0)">
+          <rect class="box" x="445" y="12" width="250" height="112" fill="#fff3e7" stroke="#b55b09"/>
+          <text class="heading" x="459" y="44">Shooter speed</text>
+          <text class="detail" x="459" y="78">Square: increase speed</text>
+          <text class="detail" x="459" y="109">Circle: decrease speed</text>
+        </g>
+        <g aria-label="Wheel speed">
+          <rect class="box" x="12" y="251" width="306" height="174" fill="#f2ecfc" stroke="#7746cf"/>
+          <text class="heading" x="24" y="283">Wheel speed (D-pad)</text>
+          <text class="detail" x="24" y="315">Up: 100% (turbo)</text>
+          <text class="detail" x="24" y="347">Left: 50% (medium)</text>
+          <text class="detail" x="24" y="379">Right: 75% (fast)</text>
+          <text class="detail" x="24" y="411">Down: 25% (slow)</text>
+        </g>
+        <g aria-label="Intake">
+          <rect class="box" x="922" y="267" width="258" height="108" fill="#eaf6ef" stroke="#14834b"/>
+          <text class="heading" x="936" y="299">Intake</text>
+          <text class="detail" x="936" y="330">Triangle: increase power</text>
+          <text class="detail" x="936" y="361">Cross: decrease power</text>
+        </g>
+        <g aria-label="Driving" transform="translate(75 0)">
+          <rect class="box" x="412" y="591" width="266" height="108" fill="#edf3ff" stroke="#2457cf"/>
+          <text class="heading" x="426" y="622">Driving</text>
+          <text class="detail" x="426" y="654">Left stick: drive + strafe</text>
+          <text class="detail" x="426" y="686">Right stick: turn left / right</text>
+        </g>
+      </svg>
+    </div>
   </main>
-
-  <footer>Mappings verified against Remote.java &bull; September 27, 2026</footer>
 </body>
 </html>
