@@ -39,9 +39,7 @@ public class Yoshi {
 
         shooter = hardwareMap.get(DcMotorEx.class, RobotConstants.SHOOTER);
         shooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        shooterPIDF = shooter.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);
-        shooterPIDF.p = 250;
-        shooter.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, shooterPIDF);
+        setShooterPValue(RobotConstants.DEFAULT_SHOOTER_P);
         
         frontLeftDrive.setDirection(DcMotor.Direction.FORWARD);
         backLeftDrive.setDirection(DcMotor.Direction.FORWARD);
@@ -183,6 +181,12 @@ public class Yoshi {
 
     public void setShooterVelocity(double velocity) {
         shooter.setVelocity(velocity);
+    }
+
+    public void setShooterPValue(double p) {
+        shooterPIDF = shooter.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);
+        shooterPIDF.p = p;
+        shooter.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, shooterPIDF);
     }
 
     public void setTriggerPower(double power) {

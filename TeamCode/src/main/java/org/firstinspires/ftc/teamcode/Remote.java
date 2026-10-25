@@ -19,6 +19,7 @@ public class Remote extends LinearOpMode {
     private double maxWheelSpeed = RobotConstants.DEFAULT_MAX_WHEEL_SPEED;
     private double intakeSpeed  = RobotConstants.DEFAULT_INTAKE_SPEED;
     private double shooterSpeed  = RobotConstants.DEFAULT_SHOOTER_SPEED;
+    private double pvalue = RobotConstants.DEFAULT_SHOOTER_P;
 
 
     @Override
@@ -64,6 +65,14 @@ public class Remote extends LinearOpMode {
         if (gamepad1.b) {
             shooterSpeed = shooterSpeed - RobotConstants.SHOOTER_SPEED_STEP;
             robot.setShooterVelocity(shooterSpeed);
+        }
+        if(gamepad1.leftBumperWasReleased()) {
+            pvalue = pvalue+5;
+            robot.setShooterPValue(pvalue);
+        }
+        if(gamepad1.rightBumperWasReleased()) {
+            pvalue = pvalue-5;
+            robot.setShooterPValue(pvalue);
         }
     }
 
@@ -125,7 +134,7 @@ public class Remote extends LinearOpMode {
         gamepad1.right_stick_x, gamepad1.right_stick_y);
 
         telemetry.addData("Intake speed", "%4.2f", robot.intake.getPower());
-        telemetry.addData("Shooter speed", "%.2f", shooterSpeed);
+        telemetry.addData("Shooter speed", "%4.0f", robot.shooter.getVelocity());
         telemetry.addData("Trigger power", "%4.2f", robot.trigger.getPower());
 
         telemetry.update();
