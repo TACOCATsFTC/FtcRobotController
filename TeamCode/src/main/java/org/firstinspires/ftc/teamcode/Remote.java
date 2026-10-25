@@ -20,11 +20,14 @@ public class Remote extends LinearOpMode {
     private double intakeSpeed  = RobotConstants.DEFAULT_INTAKE_SPEED;
     private double shooterSpeed  = RobotConstants.DEFAULT_SHOOTER_SPEED;
     private double pvalue = RobotConstants.DEFAULT_SHOOTER_P;
+    private final VelocityGraph velocityGraph = new VelocityGraph();
 
 
     @Override
     public void runOpMode() {
         robot.init(hardwareMap);
+
+        velocityGraph.start();
 
         telemetry.addData("Status", "Initialized. Updated 6/25/26 at 11:16pm");
         telemetry.update();
@@ -43,7 +46,14 @@ public class Remote extends LinearOpMode {
             handleWheelSpeedControls();
             handleJoysticks();
             sendTelemetry();
+
+            velocityGraph.setVelocity(robot.shooter.getVelocity());   // required
+            velocityGraph.setTarget(shooterSpeed);         // optional: target line
+            velocityGraph.setPValue(pvalue);               // optional: shows P
+
         }
+
+        velocityGraph.stop();
     }
 
     private void handleIntakeControls() {
