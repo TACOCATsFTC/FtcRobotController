@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -23,6 +24,7 @@ public class Yoshi {
     public DcMotor backRightDrive;
     public DcMotor intake;
     public DcMotorEx shooter;
+    public PIDFCoefficients shooterPIDF;
     public CRServo trigger;
     public SparkFunOTOS otos;
 
@@ -31,10 +33,16 @@ public class Yoshi {
         backLeftDrive = hardwareMap.get(DcMotor.class, RobotConstants.BACK_LEFT_DRIVE);
         frontRightDrive = hardwareMap.get(DcMotor.class, RobotConstants.FRONT_RIGHT_DRIVE);
         backRightDrive = hardwareMap.get(DcMotor.class, RobotConstants.BACK_RIGHT_DRIVE);
+
         intake = hardwareMap.get(DcMotor.class, RobotConstants.INTAKE);
-        shooter = hardwareMap.get(DcMotorEx.class, RobotConstants.SHOOTER);
         trigger = hardwareMap.get(CRServo.class, RobotConstants.TRIGGER);
 
+        shooter = hardwareMap.get(DcMotorEx.class, RobotConstants.SHOOTER);
+        shooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        shooterPIDF = shooter.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);
+        shooterPIDF.p = 250;
+        shooter.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, shooterPIDF);
+        
         frontLeftDrive.setDirection(DcMotor.Direction.FORWARD);
         backLeftDrive.setDirection(DcMotor.Direction.FORWARD);
         frontRightDrive.setDirection(DcMotor.Direction.REVERSE);
@@ -172,6 +180,7 @@ public class Yoshi {
     public void setIntakePower(double power) {
         intake.setPower(power);
     }
+
     public void setShooterVelocity(double velocity) {
         shooter.setVelocity(velocity);
     }
