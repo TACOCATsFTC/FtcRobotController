@@ -1,18 +1,10 @@
 package org.firstinspires.ftc.teamcode;
-
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-/*
- 1) Axial:    Driving forward and backward                Left-joystick Forward/Backward
- 2) Lateral:  Strafing right and left                     Left-joystick Right and Left
- 3) Yaw:      Rotating Clockwise and counter clockwise    Right-joystick Right and Left
- */
-
 @TeleOp(name="Yoshi TeleOp", group="Linear OpMode")
 public class Remote extends LinearOpMode {
-
     private final ElapsedTime runtime = new ElapsedTime();
     private final Yoshi robot = new Yoshi();
 
@@ -22,13 +14,10 @@ public class Remote extends LinearOpMode {
     private double pvalue = RobotConstants.DEFAULT_SHOOTER_P;
     private final VelocityGraph velocityGraph = new VelocityGraph();
 
-
     @Override
     public void runOpMode() {
         robot.init(hardwareMap);
-
         velocityGraph.start();
-
         telemetry.addData("Status", "Initialized. Updated 6/25/26 at 11:16pm");
         telemetry.update();
 
@@ -36,7 +25,6 @@ public class Remote extends LinearOpMode {
         runtime.reset();
 
         robot.setIntakePower(RobotConstants.DEFAULT_INTAKE_SPEED);
-
         robot.setShooterVelocity(RobotConstants.DEFAULT_SHOOTER_SPEED);
 
         while (opModeIsActive()) {
@@ -47,12 +35,10 @@ public class Remote extends LinearOpMode {
             handleJoysticks();
             sendTelemetry();
 
-            velocityGraph.setVelocity(robot.shooter.getVelocity());   // required
-            velocityGraph.setTarget(shooterSpeed);         // optional: target line
-            velocityGraph.setPValue(pvalue);               // optional: shows P
-
+            velocityGraph.setVelocity(robot.shooter.getVelocity());
+            velocityGraph.setTarget(shooterSpeed);
+            velocityGraph.setPValue(pvalue);
         }
-
         velocityGraph.stop();
     }
 
@@ -77,11 +63,11 @@ public class Remote extends LinearOpMode {
             robot.setShooterVelocity(shooterSpeed);
         }
         if(gamepad1.leftBumperWasReleased()) {
-            pvalue = pvalue+5;
+            pvalue = pvalue + 5;
             robot.setShooterPValue(pvalue);
         }
         if(gamepad1.rightBumperWasReleased()) {
-            pvalue = pvalue-5;
+            pvalue = pvalue - 5;
             robot.setShooterPValue(pvalue);
         }
     }
@@ -134,9 +120,9 @@ public class Remote extends LinearOpMode {
         telemetry.addData("Status", "Run Time: " + runtime);
         telemetry.addData("Wheel max power", "%4.2f", maxWheelSpeed);
         telemetry.addData("Front left/Right", "%4.2f, %4.2f", 
-        robot.frontLeftDrive.getPower(), robot.frontRightDrive.getPower());
+            robot.frontLeftDrive.getPower(), robot.frontRightDrive.getPower());
         telemetry.addData("Back  left/Right", "%4.2f, %4.2f", 
-        robot.backLeftDrive.getPower(), robot.backRightDrive.getPower());
+            robot.backLeftDrive.getPower(), robot.backRightDrive.getPower());
 
         telemetry.addData("Left stick X/Y", "%4.2f, %4.2f",
         gamepad1.left_stick_x, gamepad1.left_stick_y);
