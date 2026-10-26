@@ -43,7 +43,7 @@ public class Remote extends LinearOpMode {
     }
 
     private void handleIntakeControls() {
-        if (gamepad1.y) {
+        if (gamepad1.y) { // todo: this should just set the intake to 100% and -100%
             intakeSpeed = Math.min(1.0, intakeSpeed + RobotConstants.INTAKE_SPEED_STEP);
             robot.setIntakePower(intakeSpeed);
         }
@@ -54,7 +54,7 @@ public class Remote extends LinearOpMode {
     }
 
     private void handleShooterControls() {
-        if (gamepad1.x) {
+        if (gamepad1.x) { // todo: switch to crossWasReleased to make adjusting the speed more consistent
             shooterSpeed = shooterSpeed + RobotConstants.SHOOTER_SPEED_STEP;
             robot.setShooterVelocity(shooterSpeed);
         }
@@ -62,7 +62,7 @@ public class Remote extends LinearOpMode {
             shooterSpeed = shooterSpeed - RobotConstants.SHOOTER_SPEED_STEP;
             robot.setShooterVelocity(shooterSpeed);
         }
-        if(gamepad1.leftBumperWasReleased()) {
+        if(gamepad1.leftBumperWasReleased()) { // todo: disable this for competitions
             pvalue = pvalue + 5;
             robot.setShooterPValue(pvalue);
         }
@@ -99,7 +99,7 @@ public class Remote extends LinearOpMode {
     }
 
     private void handleJoysticks() {
-        double axial   = -gamepad1.left_stick_y;
+        double axial   = -gamepad1.left_stick_y; // todo: this should all be in Yoshi.java
         double lateral = -gamepad1.left_stick_x;
         double yaw     = gamepad1.right_stick_x;
 
@@ -116,7 +116,7 @@ public class Remote extends LinearOpMode {
         robot.drive(axial, lateral, yaw, maxWheelSpeed);
     }
 
-    private void sendTelemetry() {
+    private void sendTelemetry() { // todo: think about what is really valuable here
         telemetry.addData("Status", "Run Time: " + runtime);
         telemetry.addData("Wheel max power", "%4.2f", maxWheelSpeed);
         telemetry.addData("Front left/Right", "%4.2f, %4.2f", 

@@ -34,13 +34,6 @@ public class Yoshi {
         frontRightDrive = hardwareMap.get(DcMotor.class, RobotConstants.FRONT_RIGHT_DRIVE);
         backRightDrive = hardwareMap.get(DcMotor.class, RobotConstants.BACK_RIGHT_DRIVE);
 
-        intake = hardwareMap.get(DcMotor.class, RobotConstants.INTAKE);
-        trigger = hardwareMap.get(CRServo.class, RobotConstants.TRIGGER);
-
-        shooter = hardwareMap.get(DcMotorEx.class, RobotConstants.SHOOTER);
-        shooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        setShooterPValue(RobotConstants.DEFAULT_SHOOTER_P);
-        
         frontLeftDrive.setDirection(DcMotor.Direction.FORWARD);
         backLeftDrive.setDirection(DcMotor.Direction.FORWARD);
         frontRightDrive.setDirection(DcMotor.Direction.REVERSE);
@@ -50,6 +43,13 @@ public class Yoshi {
         backLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        intake = hardwareMap.get(DcMotor.class, RobotConstants.INTAKE);
+        trigger = hardwareMap.get(CRServo.class, RobotConstants.TRIGGER);
+
+        shooter = hardwareMap.get(DcMotorEx.class, RobotConstants.SHOOTER);
+        shooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        setShooterPValue(RobotConstants.DEFAULT_SHOOTER_P);
 
         otos = hardwareMap.get(SparkFunOTOS.class, RobotConstants.OTOS_NAME);
         configureOtos();
@@ -67,6 +67,24 @@ public class Yoshi {
         otos.resetTracking();
     }
 
+    public void setIntakePower(double power) {
+        intake.setPower(power);
+    }
+
+    public void setShooterVelocity(double velocity) {
+        shooter.setVelocity(velocity);
+    }
+
+    public void setShooterPValue(double p) {
+        shooterPIDF = shooter.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);
+        shooterPIDF.p = p;
+        shooter.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, shooterPIDF);
+    }
+
+    public void setTriggerPower(double power) {
+        trigger.setPower(power);
+    }
+
     public void drive(double axial, double lateral, double yaw, double maxWheelSpeed) {
         double fl = axial + lateral - yaw;
         double fr = axial - lateral + yaw;
@@ -82,20 +100,20 @@ public class Yoshi {
             br /= max;
         }
 
-        frontLeftDrive.setPower(fl * maxWheelSpeed);
+        frontLeftDrive.setPower(fl * maxWheelSpeed); // todo: this should be a call to setWheelPowers()
         frontRightDrive.setPower(fr * maxWheelSpeed);
         backLeftDrive.setPower(bl * maxWheelSpeed);
         backRightDrive.setPower(br * maxWheelSpeed);
     }
 
-    public void setWheelPowers(double fl, double fr, double bl, double br) {
+    public void setWheelPowers(double fl, double fr, double bl, double br) { // todo: this should be private
         frontLeftDrive.setPower(fl);
         frontRightDrive.setPower(fr);
         backLeftDrive.setPower(bl);
         backRightDrive.setPower(br);
     }
 
-    public void stopDrive() {
+    public void stopDrive() { // todo: this should be private
         setWheelPowers(0, 0, 0, 0);
     }
 
@@ -173,23 +191,5 @@ public class Yoshi {
             degrees += 360.0;
         }
         return degrees;
-    }
-
-    public void setIntakePower(double power) {
-        intake.setPower(power);
-    }
-
-    public void setShooterVelocity(double velocity) {
-        shooter.setVelocity(velocity);
-    }
-
-    public void setShooterPValue(double p) {
-        shooterPIDF = shooter.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);
-        shooterPIDF.p = p;
-        shooter.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, shooterPIDF);
-    }
-
-    public void setTriggerPower(double power) {
-        trigger.setPower(power);
     }
 }
