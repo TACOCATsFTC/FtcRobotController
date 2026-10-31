@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VelocityGraph</title>
+<style>
+  body { font-family: sans-serif; max-width: 760px; margin: 10px auto; padding: 0 10px; background: #fff; color: #222; }
+  h1 { font-size: 22px; margin: 6px 0; }
+  h2 { font-size: 16px; margin: 12px 0 4px; }
+  p, li { margin: 3px 0; }
+  pre { background: #f4f4f4; border: 1px solid #ddd; padding: 6px 8px; margin: 4px 0; overflow-x: auto; }
+  code { background: #f4f4f4; padding: 0 3px; }
+  pre code { padding: 0; }
+</style>
+</head>
+<body>
+
+<h1>VelocityGraph</h1>
+<p>A tool to show you the velocity of your shooter.</p>
+
+<h2>Step 1. Copy the <code>VelocityGraph.java</code> into your teamcode folder:</h2>
+
+<h2>Step 2. Create a variable at the beginning of your Remote Control program:</h2>
+<pre><code>private final VelocityGraph velocityGraph = new VelocityGraph();
+</code></pre>
+
+<h2>Step 3. At the start of your remote control opmode, start the Velocity Graph</h2>
+<pre><code>// after init
+velocityGraph.start();
+</code></pre>
+<h2>Step 4. Every loop, log the speed, pvalue, and fvalue to the tool</h2>
+<pre><code>// every loop
+velocityGraph.setVelocity(shooter.getVelocity());   // required
+velocityGraph.setTarget(shooterSpeed);         // optional: target line
+velocityGraph.setPValue(pvalue);               // optional: shows P
+velocityGraph.setFValue(fvalue);               // optional: shows F
+</code></pre>
+<h2>Step 5. At the end of your remote control OpMode, stop the VelocityGraph</h2>
+<pre><code>// after the loop
+velocityGraph.stop();
+</code></pre>
+
+<h2>Step 6. Put your code on the robot</h2>
+
+<h2>Step 7. Open the graph</h2>
+<p>Make sure the laptop remains connected to the robot</p>
+<p>Run <a href="connect-robot.bat">connect-robot.bat</a> (open it from your Downloads, or double-click it in the <code>doc</code> folder)</p>
+<p>Start the remote control OpMode</p>
+<p>Open this page: <a href="http://localhost:8000" target="_blank"><code>http://localhost:8000</code></a></p>
+<p>You can start and stop the opmode without refreshing this page.</p>
+
+</body>
+</html>
