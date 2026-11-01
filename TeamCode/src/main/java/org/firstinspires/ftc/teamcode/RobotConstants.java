@@ -12,14 +12,14 @@ public final class RobotConstants {
     public static final String TRIGGER              = "trigger";
     public static final String OTOS_NAME            = "sensor_otos";
 
-    public static final double DEFAULT_MAX_WHEEL_SPEED = 0.75;
+    public static final double DEFAULT_MAX_WHEEL_SPEED = 1.0;
     public static final double SLOW_WHEEL_SPEED     = 0.25;
     public static final double MEDIUM_WHEEL_SPEED   = 0.5;
     public static final double FAST_WHEEL_SPEED     = 0.75;
     public static final double TURBO_WHEEL_SPEED    = 1.0;
     public static final double JOYSTICK_DEADBAND    = 0.05;
 
-    public static final double DEFAULT_INTAKE_SPEED = 1;
+    public static final double DEFAULT_INTAKE_SPEED = 0.80;
     public static final double INTAKE_SPEED_STEP    = 0.001;
 
     public static final double DEFAULT_SHOOTER_SPEED = 1300;
