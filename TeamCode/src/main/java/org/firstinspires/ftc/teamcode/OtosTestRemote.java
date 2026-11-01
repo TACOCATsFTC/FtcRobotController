@@ -4,8 +4,6 @@ import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-
 @TeleOp(name = "OTOS Test Remote", group = "Test") // todo: disable before the competition
 public class OtosTestRemote extends LinearOpMode {
     private final Yoshi robot = new Yoshi();
@@ -21,8 +19,8 @@ public class OtosTestRemote extends LinearOpMode {
      
         while (opModeIsActive()) {
             SparkFunOTOS.Pose2D pose = robot.otos.getPosition();
-            telemetry.addData("X", "%.2f mm", DistanceUnit.MM.fromInches(pose.x));
-            telemetry.addData("Y", "%.2f mm", DistanceUnit.MM.fromInches(pose.y));
+            telemetry.addData("X", "%.2f mm", pose.x);
+            telemetry.addData("Y", "%.2f mm", pose.y);
             telemetry.addData("Heading", "%.2f deg", pose.h);
             telemetry.update();
         }

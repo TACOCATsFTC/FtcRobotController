@@ -16,7 +16,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 public class Yoshi {
     private static final String TAG = "Yoshi";
-    private static final double MILLIMETERS_PER_INCH = 25.4;
 
     public DcMotor frontLeftDrive;
     public DcMotor backLeftDrive;
@@ -56,10 +55,10 @@ public class Yoshi {
     }
 
     private void configureOtos() {
-        otos.setLinearUnit(DistanceUnit.INCH);
+        otos.setLinearUnit(DistanceUnit.MM);
         otos.setAngularUnit(AngleUnit.DEGREES);
         otos.setOffset(new SparkFunOTOS.Pose2D(
-                RobotConstants.OTOS_OFFSET_X_IN, RobotConstants.OTOS_OFFSET_Y_IN,
+                RobotConstants.OTOS_OFFSET_X_MM, RobotConstants.OTOS_OFFSET_Y_MM,
                 RobotConstants.OTOS_OFFSET_HEADING_DEG));
         otos.setLinearScalar(RobotConstants.OTOS_LINEAR_SCALAR);
         otos.setAngularScalar(RobotConstants.OTOS_ANGULAR_SCALAR);
@@ -117,11 +116,9 @@ public class Yoshi {
         setWheelPowers(0, 0, 0, 0);
     }
 
-    public void driveToPosition(LinearOpMode opMode, double targetXMillimeters,
-                                double targetYMillimeters,
+    public void driveToPosition(LinearOpMode opMode, double targetX,
+                                double targetY,
                                 double targetHeading, double speed) {
-        double targetX = targetXMillimeters / MILLIMETERS_PER_INCH;
-        double targetY = targetYMillimeters / MILLIMETERS_PER_INCH;
         ElapsedTime moveTimer = new ElapsedTime();
 
         while (opMode.opModeIsActive()
@@ -133,7 +130,7 @@ public class Yoshi {
             double distanceToTarget = Math.hypot(distanceToX, distanceToY);
 
             boolean positionReached =
-                    distanceToTarget <= RobotConstants.POSITION_TOLERANCE_IN;
+                    distanceToTarget <= RobotConstants.POSITION_TOLERANCE_MM;
             boolean headingReached =
                     Math.abs(distanceToHeading) <= RobotConstants.HEADING_TOLERANCE_DEG;
             if (positionReached && headingReached) {
@@ -150,7 +147,7 @@ public class Yoshi {
             double lateralPower = 0.0;
             if (!positionReached) {
                 double positionScale = Math.min(
-                        1.0, distanceToTarget / RobotConstants.POSITION_SLOWDOWN_IN);
+                        1.0, distanceToTarget / RobotConstants.POSITION_SLOWDOWN_MM);
                 double drivePower = Math.max(
                         RobotConstants.MIN_DRIVE_POWER, speed * positionScale);
                 axialPower = (robotAxial / distanceToTarget) * drivePower;
@@ -167,15 +164,12 @@ public class Yoshi {
             }
 
             Log.d(TAG, String.format(
-                    "X=%.1f Y=%.1f H=%.1f | dX=%.1f dY=%.1f dH=%.1f | ax=%.2f lat=%.2f yaw=%.2f",
-                    pose.x, pose.y, pose.h, distanceToX, distanceToY, distanceToHeading,
-                    axialPower, lateralPower, yawPower));
+                    "Target: X=%.1f, Y=%.1f, H=%.1f | Distance to target: dX=%.1f, dY=%.1f, dH=%.1f",
+                    pose.x, pose.y, pose.h, distanceToX, distanceToY, distanceToHeading));
 
             drive(axialPower, lateralPower, yawPower, 1.0);
-            opMode.telemetry.addData("Target", "X %.1f  Y %.1f  H %.1f",
-                    targetX, targetY, targetHeading);
-            opMode.telemetry.addData("Position", "X %.1f  Y %.1f  H %.1f",
-                    pose.x, pose.y, pose.h);
+            opMode.telemetry.addData("Target", "X %.1f mm  Y %.1f mm  H %.1f deg", targetX, targetY, targetHeading);
+            opMode.telemetry.addData("Position", "X %.1f mm  Y %.1f mm  H %.1f deg", pose.x, pose.y, pose.h);
             opMode.telemetry.update();
             opMode.idle();
         }

@@ -28,14 +28,14 @@ public final class RobotConstants {
 
     public static final double TRIGGER_POWER        = 1.0;
 
-    public static final double OTOS_OFFSET_X_IN = 0.0;
-    public static final double OTOS_OFFSET_Y_IN = 0.0;
+    public static final double OTOS_OFFSET_X_MM = 0.0;
+    public static final double OTOS_OFFSET_Y_MM = 0.0;
     public static final double OTOS_OFFSET_HEADING_DEG = 180.0;
     public static final double OTOS_LINEAR_SCALAR = 1.0;
     public static final double OTOS_ANGULAR_SCALAR = 1.0;
-    public static final double POSITION_TOLERANCE_IN = 1.0;
+    public static final double POSITION_TOLERANCE_MM = 30;
     public static final double HEADING_TOLERANCE_DEG = 3.0;
-    public static final double POSITION_SLOWDOWN_IN = 12.0;
+    public static final double POSITION_SLOWDOWN_MM = 300;
     public static final double HEADING_SLOWDOWN_DEG = 45.0;
     public static final double MIN_DRIVE_POWER = 0.20;
     public static final double MIN_TURN_POWER = 0.10;
