@@ -18,14 +18,14 @@
     .small { font-size: 18px; }
     .connector { fill: none; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
     .connector-halo { fill: none; stroke: #fff; stroke-width: 10; stroke-linecap: round; stroke-linejoin: round; }
-    .marker circle { fill: currentColor; stroke: #fff; stroke-width: 3; r: 6; }
-    .symbol { font: 700 27px Arial, sans-serif; text-anchor: middle; dominant-baseline: middle; }
-    .hardware-label { fill: #fff; font-size: 15px; font-weight: 700; text-anchor: middle; }
-    @page { size: 1240px 776px; margin: 0; }
+    .marker circle { fill: none; stroke: currentColor; stroke-width: 3; r: 18; }
+    .marker .small-ring { r: 10; }
+    .marker .stick-ring { r: 34; }
+    @page { size: letter landscape; margin: 0.25in; }
     @media print {
       body { padding: 0; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
-      main { width: 100%; max-width: none; padding: 0; border: 0; border-radius: 0; }
-      h1 { font-size: 32px; line-height: 48px; margin: 0 0 8px; padding: 0 12px; }
+      main { width: 10.5in; max-width: 100%; padding: 0; border: 0; border-radius: 0; break-inside: avoid; }
+      h1 { font-size: 24px; line-height: 32px; margin: 0 0 6px; padding: 0; }
       .intro { font-size: 16px; }
       .diagram { overflow: visible; }
       svg { height: auto; }
@@ -38,54 +38,35 @@
     <div class="diagram" role="region" aria-label="Driver controls diagram">
       <svg viewBox="0 0 1240 720" role="img" aria-labelledby="map-title map-desc">
         <title id="map-title">Yoshi Gamepad 1 controls</title>
-        <desc id="map-desc">Left stick drives forward, backward, and strafes. Right stick turns. D-pad down selects 25 percent wheel speed, left 50 percent, right 75 percent, and up 100 percent. Triangle increases intake power; Cross decreases it. Square increases shooter speed; Circle decreases it. Right trigger runs the trigger servo forward while held; left trigger reverses it. Right trigger takes priority when both are held.</desc>
-        <defs>
-          <linearGradient id="shell" x1="0" y1="0" x2="0.8" y2="1">
-            <stop stop-color="#6492ff"/><stop offset="0.45" stop-color="#3d49ac"/><stop offset="1" stop-color="#272041"/>
-          </linearGradient>
-          <linearGradient id="pad" x2="0" y2="1">
-            <stop stop-color="#6c9cff"/><stop offset="1" stop-color="#3a5fc7"/>
-          </linearGradient>
-        </defs>
-
+        <desc id="map-desc">Yoshi TeleOp uses gamepad 1. Left stick drives forward, backward, and strafes. Right stick turns. D-pad down selects 25 percent wheel speed, left 50 percent, right 75 percent, and up 100 percent; default is 75 percent. Hold Triangle (Y) to increase intake power by 0.001 per loop; hold Cross (A) to decrease it, limited to minus 100 through 100 percent. Hold Square (X) to increase shooter speed by 10 ticks per second per loop; hold Circle (B) to decrease it. Release the left bumper (L1/LB) to increase shooter P by 5; release the right bumper (R1/RB) to decrease it. P tuning is for testing, not competition. Right trigger (R2/RT) runs the trigger servo forward at full power while held; left trigger (L2/LT) reverses it. Right trigger takes priority when both are held; releasing both stops the trigger. On Start, intake runs at 100 percent and shooter target is 1300 ticks per second; initial P is 67.</desc>
         <g aria-label="PlayStation-style controller">
-          <rect x="435" y="205" width="74" height="44" rx="14" fill="#252639" stroke="#45465e" stroke-width="3"/>
-          <rect x="731" y="205" width="74" height="44" rx="14" fill="#252639" stroke="#45465e" stroke-width="3"/>
-          <path d="M432 244 C481 216 544 231 572 239 H668 C711 225 761 221 808 244 C838 268 855 342 864 435 L876 509 C881 556 850 584 823 558 L752 462 C730 437 704 424 671 424 H569 C536 424 510 437 488 462 L417 558 C390 584 359 556 364 509 L376 435 C385 342 402 268 432 244 Z"
-            fill="url(#shell)" stroke="#27243e" stroke-width="5"/>
-          <rect x="521" y="247" width="198" height="108" rx="24" fill="url(#pad)" stroke="#283c80" stroke-width="4"/>
-          <rect x="430" y="237" width="80" height="17" rx="7" fill="#38374e"/>
-          <rect x="730" y="237" width="80" height="17" rx="7" fill="#38374e"/>
-          <text class="hardware-label" x="470" y="232">L2</text>
-          <text class="hardware-label" x="770" y="232">R2</text>
-          <path d="M439 319 h21 v-24 h27 v24 h23 v27 h-23 v24 h-27 v-24 h-21z" fill="#25293f" stroke="#171b2b" stroke-width="3"/>
-          <text class="hardware-label" x="474" y="315">&#9650;</text>
-          <text class="hardware-label" x="474" y="363">&#9660;</text>
-          <circle cx="752" cy="291" r="19" fill="#25293f" stroke="#20223e" stroke-width="3"/>
-          <circle cx="717" cy="330" r="19" fill="#25293f" stroke="#20223e" stroke-width="3"/>
-          <circle cx="787" cy="330" r="19" fill="#25293f" stroke="#20223e" stroke-width="3"/>
-          <circle cx="752" cy="369" r="19" fill="#25293f" stroke="#20223e" stroke-width="3"/>
-          <text class="symbol" fill="#7de4cb" x="752" y="291">&#9651;</text>
-          <text class="symbol" fill="#edb2e0" x="717" y="330">&#9633;</text>
-          <text class="symbol" fill="#ffa5b0" x="787" y="330">&#9675;</text>
-          <text class="symbol" fill="#a8ceff" x="752" y="369">&#215;</text>
-          <circle cx="540" cy="405" r="42" fill="#29283e" stroke="#565776" stroke-width="5"/>
-          <circle cx="540" cy="405" r="29" fill="#45445c" stroke="#1e2035" stroke-width="3"/>
-          <circle cx="700" cy="405" r="42" fill="#29283e" stroke="#565776" stroke-width="5"/>
-          <circle cx="700" cy="405" r="29" fill="#45445c" stroke="#1e2035" stroke-width="3"/>
-          <circle cx="620" cy="400" r="12" fill="#25293f"/>
-          <rect x="605" y="427" width="30" height="6" rx="3" fill="#92b5bd"/>
+          <image href="controller.png" x="350" y="190" width="540" height="377">
+            <title>Supplied PlayStation controller image</title>
+          </image>
         </g>
 
         <g aria-label="Control connection lines">
           <defs>
-            <path id="trigger-route" d="M530 143 L470 216 M700 143 L770 216"/>
-            <path id="shooter-route" d="M890 78 H845 V245 L717 330 M890 109 H875 V310 L787 330"/>
-            <path id="wheel-route" d="M318 350 H395 L430 332"/>
-            <path id="intake-route" d="M922 330 H866 L752 291 M922 361 H853 L752 369"/>
-            <path id="driving-route" d="M540 591 V405 M700 591 V405"/>
+            <mask id="control-centers" maskUnits="userSpaceOnUse" x="0" y="0" width="1240" height="720">
+              <rect width="1240" height="720" fill="white"/>
+              <g fill="black">
+                <circle cx="473" cy="221" r="9"/><circle cx="771" cy="221" r="9"/>
+                <circle cx="473" cy="239" r="9"/><circle cx="771" cy="239" r="9"/>
+                <circle cx="736" cy="307" r="17"/><circle cx="806" cy="307" r="17"/>
+                <circle cx="771" cy="272" r="17"/><circle cx="771" cy="342" r="17"/>
+                <circle cx="472" cy="278" r="9"/><circle cx="444" cy="307" r="9"/>
+                <circle cx="497" cy="307" r="9"/><circle cx="472" cy="330" r="9"/>
+                <circle cx="545" cy="373" r="33"/><circle cx="698" cy="373" r="33"/>
+              </g>
+            </mask>
+            <path id="trigger-route" d="M512 143 L473 221 M560 143 L771 221"/>
+            <path id="shooter-route" d="M890 268 H845 L736 307 M890 299 H875 L806 307"/>
+            <path id="wheel-route" d="M318 350 H395 L444 307"/>
+            <path id="intake-route" d="M922 453 C850 453 875 350 850 300 C838 275 810 272 771 272 M922 484 C835 484 860 375 771 342"/>
+            <path id="driving-route" d="M545 516 V373 M698 516 V373"/>
+            <path id="p-route" d="M785 143 L473 239 M885 143 L771 239"/>
           </defs>
-          <g class="connector">
+          <g class="connector" mask="url(#control-centers)">
             <use class="connector-halo" href="#trigger-route"/>
             <use href="#trigger-route" stroke="#14834b"/>
             <use class="connector-halo" href="#shooter-route"/>
@@ -96,44 +77,54 @@
             <use href="#intake-route" stroke="#14834b"/>
             <use class="connector-halo" href="#driving-route"/>
             <use href="#driving-route" stroke="#2457cf"/>
+            <use class="connector-halo" href="#p-route"/>
+            <use href="#p-route" stroke="#b55b09"/>
           </g>
         </g>
         <g class="marker">
           <g style="color: #14834b">
-            <circle cx="470" cy="216"/>
-            <circle cx="770" cy="216"/>
+            <circle class="small-ring" cx="473" cy="221"/>
+            <circle class="small-ring" cx="771" cy="221"/>
           </g>
           <g style="color: #b55b09">
-            <circle cx="717" cy="330"/>
-            <circle cx="787" cy="330"/>
+            <circle class="small-ring" cx="473" cy="239"/>
+            <circle class="small-ring" cx="771" cy="239"/>
+            <circle cx="736" cy="307"/>
+            <circle cx="806" cy="307"/>
           </g>
           <g style="color: #7746cf">
-            <circle cx="474" cy="306"/>
-            <circle cx="448" cy="332"/>
-            <circle cx="500" cy="332"/>
-            <circle cx="474" cy="358"/>
+            <circle class="small-ring" cx="472" cy="278"/>
+            <circle class="small-ring" cx="444" cy="307"/>
+            <circle class="small-ring" cx="497" cy="307"/>
+            <circle class="small-ring" cx="472" cy="330"/>
           </g>
           <g style="color: #14834b">
-            <circle cx="752" cy="291"/>
-            <circle cx="752" cy="369"/>
+            <circle cx="771" cy="272"/>
+            <circle cx="771" cy="342"/>
           </g>
           <g style="color: #2457cf">
-            <circle cx="540" cy="405"/>
-            <circle cx="700" cy="405"/>
+            <circle class="stick-ring" cx="545" cy="373"/>
+            <circle class="stick-ring" cx="698" cy="373"/>
           </g>
         </g>
 
-        <g aria-label="Trigger servo" transform="translate(500 0)">
-          <rect class="box" x="12" y="35" width="210" height="108" fill="#eaf6ef" stroke="#14834b"/>
-          <text class="heading" x="24" y="65">Trigger servo</text>
+        <g aria-label="Shooter p-value" transform="translate(753 0)">
+          <rect class="box" x="12" y="35" width="240" height="108" fill="#fff3e7" stroke="#b55b09"/>
+          <text class="heading" x="24" y="65">Shooter p-value</text>
+          <text class="detail" x="24" y="96">Left: p-value + 5</text>
+          <text class="detail" x="24" y="128">Right: p-value - 5</text>
+        </g>
+        <g aria-label="Trigger" transform="translate(400 0)">
+          <rect class="box" x="12" y="35" width="200" height="108" fill="#eaf6ef" stroke="#14834b"/>
+          <text class="heading" x="24" y="65">Trigger</text>
           <text class="detail" x="24" y="96">Left: reverse</text>
           <text class="detail" x="24" y="126">Right: forward</text>
         </g>
-        <g aria-label="Shooter speed" transform="translate(445 0)">
-          <rect class="box" x="445" y="12" width="250" height="112" fill="#fff3e7" stroke="#b55b09"/>
+        <g aria-label="Shooter speed" transform="translate(445 190)">
+          <rect class="box" x="445" y="12" width="220" height="112" fill="#fff3e7" stroke="#b55b09"/>
           <text class="heading" x="459" y="44">Shooter speed</text>
-          <text class="detail" x="459" y="78">Square: increase speed</text>
-          <text class="detail" x="459" y="109">Circle: decrease speed</text>
+          <text class="detail" x="459" y="78">Square / X: +10</text>
+          <text class="detail" x="459" y="109">Circle / B: -10</text>
         </g>
         <g aria-label="Wheel speed">
           <rect class="box" x="12" y="251" width="306" height="174" fill="#f2ecfc" stroke="#7746cf"/>
@@ -143,13 +134,20 @@
           <text class="detail" x="24" y="379">Right: 75% (fast)</text>
           <text class="detail" x="24" y="411">Down: 25% (slow)</text>
         </g>
-        <g aria-label="Intake">
-          <rect class="box" x="922" y="267" width="258" height="108" fill="#eaf6ef" stroke="#14834b"/>
+        <g aria-label="Intake" transform="translate(0 123)">
+          <rect class="box" x="922" y="267" width="220" height="108" fill="#eaf6ef" stroke="#14834b"/>
           <text class="heading" x="936" y="299">Intake</text>
-          <text class="detail" x="936" y="330">Triangle: increase power</text>
-          <text class="detail" x="936" y="361">Cross: decrease power</text>
+          <text class="detail" x="936" y="330">Triangle / Y: faster</text>
+          <text class="detail" x="936" y="361">Cross / A: slower</text>
         </g>
-        <g aria-label="Driving" transform="translate(75 0)">
+        <g aria-label="Starting settings">
+          <text class="heading" x="24" y="505">On Start</text>
+          <text class="detail" x="24" y="538">Intake: 100% power</text>
+          <text class="detail" x="24" y="570">Wheel speed: 75%</text>
+          <text class="detail" x="24" y="602">Shooter speed: 1300</text>
+          <text class="detail" x="24" y="634">Shooter p-value: 67</text>
+        </g>
+        <g aria-label="Driving" transform="translate(75 -75)">
           <rect class="box" x="412" y="591" width="266" height="108" fill="#edf3ff" stroke="#2457cf"/>
           <text class="heading" x="426" y="622">Driving</text>
           <text class="detail" x="426" y="654">Left stick: drive + strafe</text>

@@ -39,5 +39,5 @@ public final class RobotConstants {
     public static final double HEADING_SLOWDOWN_DEG = 45.0;
     public static final double MIN_DRIVE_POWER = 0.20;
     public static final double MIN_TURN_POWER = 0.10;
-    public static final double WAYPOINT_TIMEOUT_SECONDS = 8.0;
+    public static final double TIMEOUT_SECONDS = 3.0;
 }

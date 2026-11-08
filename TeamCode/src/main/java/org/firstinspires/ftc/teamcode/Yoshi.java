@@ -116,13 +116,31 @@ public class Yoshi {
         setWheelPowers(0, 0, 0, 0);
     }
 
-    public void driveToPosition(LinearOpMode opMode, double targetX,
-                                double targetY,
+    /**
+     * Drives to a target using the default three-second waypoint timeout.
+     */
+    public void driveToPosition(LinearOpMode opMode, double targetX, double targetY,
                                 double targetHeading, double speed) {
+        driveToPosition(opMode, targetX, targetY, targetHeading, speed,
+                RobotConstants.TIMEOUT_SECONDS);
+    }
+
+    /**
+     * Drives to a target in millimeters and degrees, stopping on arrival, an OpMode
+     * stop request, or after timeoutSeconds (a finite, positive number of seconds).
+     */
+    public void driveToPosition(LinearOpMode opMode, double targetX, double targetY, double targetHeading,
+                                double speed, double timeoutSeconds) {
+        if (Double.isNaN(timeoutSeconds) || Double.isInfinite(timeoutSeconds)
+                || timeoutSeconds <= 0.0) {
+            stopDrive();
+            Log.e(TAG, "driveToPosition timeoutSeconds must be finite and positive");
+            throw new IllegalArgumentException("timeoutSeconds must be finite and positive");
+        }
         ElapsedTime moveTimer = new ElapsedTime();
 
         while (opMode.opModeIsActive()
-                && moveTimer.seconds() < RobotConstants.WAYPOINT_TIMEOUT_SECONDS) {
+                && moveTimer.seconds() < timeoutSeconds) {
             SparkFunOTOS.Pose2D pose = otos.getPosition();
             double distanceToX = targetX - pose.x;
             double distanceToY = targetY - pose.y;
